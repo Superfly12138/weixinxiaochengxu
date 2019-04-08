@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.CustomerDao">
+
+    <select id="queryCustomer" resultType="com.superfly.cms.entity.Customer">
+       select cus_id,cus_password,cus_name,cus_sex,
+       cus_age,cus_phone,cus_address,
+       cus_email,cus_registration_date
+       from customer_t
+       order by cus_id
+    </select>
+
+    <select id="queryCustomerById" resultType="com.superfly.cms.entity.Customer">
+		SELECT cus_id,cus_password,cus_name,cus_sex,
+       cus_age,cus_phone,cus_address,
+       cus_email,cus_registration_date
+       from customer_t
+		WHERE
+		cus_id=#{cusId}
+	</select>
+
+    <insert id="insertCustomer" useGeneratedKeys="true" keyProperty="cusId"
+            keyColumn="cus_id" parameterType="com.superfly.cms.entity.Customer">
+		INSERT INTO
+		customer_t(cus_password,cus_name,
+		cus_sex,cus_age,
+		cus_phone,cus_address,
+        cus_email,cus_registration_date)
+		VALUES
+		(#{cusPassword},#{cusName},
+		#{cusSex},#{cusAge}
+		#{cusPhone},#{cusAddress}
+		#{cusEmail},#{cusRegistrationDate})
+	</insert>
+    <update id="updateCustomer" parameterType="com.superfly.cms.entity.Customer">
+        update customer_t
+        <set>
+            <if test="cus_password != null">cus_password=#{cusPassword},</if>
+            <if test="cus_name != null">cus_name=#{cusName},</if>
+            <if test="cus_sex != null">cus_sex=#{cusSex},</if>
+            <if test="cus_age != null">cus_age=#{cusAge},</if>
+            <if test="cus_phone != null">cus_phone=#{cusPhone},</if>
+            <if test="cus_address != null">cus_address=#{cusAddress},</if>
+            <if test="cus_email != null">cus_email=#{cusEmail}</if>
+            <if test="cus_registration_date != null">cus_registration_date=#{cusRegistrationDate}</if>
+        </set>
+        where cus_id=#{cusId}
+    </update>
+    <delete id="deleteCustomer">
+		DELETE FROM
+		customer_t
+		WHERE
+		cus_id=#{cusId}
+	</delete>
+</mapper>
