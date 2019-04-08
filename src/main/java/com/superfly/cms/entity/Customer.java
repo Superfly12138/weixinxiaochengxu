@@ -84,4 +84,19 @@ public class Customer {
     public void setCusRegistrationDate(Date cusRegistrationDate) {
         this.cusRegistrationDate = cusRegistrationDate;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "cusId=" + cusId +
+                ", cusPassword='" + cusPassword + '\'' +
+                ", cusName='" + cusName + '\'' +
+                ", cusSex='" + cusSex + '\'' +
+                ", cusAge=" + cusAge +
+                ", cusPhone='" + cusPhone + '\'' +
+                ", cusAddress='" + cusAddress + '\'' +
+                ", cusEmail='" + cusEmail + '\'' +
+                ", cusRegistrationDate=" + cusRegistrationDate +
+                '}';
+    }
 }

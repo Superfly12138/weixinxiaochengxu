@@ -30,21 +30,21 @@
         cus_email,cus_registration_date)
 		VALUES
 		(#{cusPassword},#{cusName},
-		#{cusSex},#{cusAge}
-		#{cusPhone},#{cusAddress}
+		#{cusSex},#{cusAge},
+		#{cusPhone},#{cusAddress},
 		#{cusEmail},#{cusRegistrationDate})
 	</insert>
     <update id="updateCustomer" parameterType="com.superfly.cms.entity.Customer">
         update customer_t
         <set>
-            <if test="cus_password != null">cus_password=#{cusPassword},</if>
-            <if test="cus_name != null">cus_name=#{cusName},</if>
-            <if test="cus_sex != null">cus_sex=#{cusSex},</if>
-            <if test="cus_age != null">cus_age=#{cusAge},</if>
-            <if test="cus_phone != null">cus_phone=#{cusPhone},</if>
-            <if test="cus_address != null">cus_address=#{cusAddress},</if>
-            <if test="cus_email != null">cus_email=#{cusEmail}</if>
-            <if test="cus_registration_date != null">cus_registration_date=#{cusRegistrationDate}</if>
+            <if test="cusPassword != null">cus_password=#{cusPassword},</if>
+            <if test="cusName != null">cus_name=#{cusName},</if>
+            <if test="cusSex != null">cus_sex=#{cusSex},</if>
+            <if test="cusAge != null">cus_age=#{cusAge},</if>
+            <if test="cusPhone != null">cus_phone=#{cusPhone},</if>
+            <if test="cusAddress != null">cus_address=#{cusAddress},</if>
+            <if test="cusEmail != null">cus_email=#{cusEmail},</if>
+            <if test="cusRegistrationDate != null">cus_registration_date=#{cusRegistrationDate}</if>
         </set>
         where cus_id=#{cusId}
     </update>

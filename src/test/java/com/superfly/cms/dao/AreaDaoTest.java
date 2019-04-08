@@ -44,7 +44,7 @@ public class AreaDaoTest {
     public void updateArea() {
         Area area = new Area();
         area.setAreaName("学习 C++");
-        area.setAreaId(3);
+        area.setAreaId(7);
         area.setLastEditTime(new Date());
         int effectedNum = areaDao.updateArea(area);
         assertEquals(1,effectedNum);
