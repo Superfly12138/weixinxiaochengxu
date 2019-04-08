@@ -11,6 +11,7 @@ spring:
     password: wonderful
 
 
+
 #mybatis
 mybatis_config_file: mybatis-config.xml
 mapper_path: /mapper/**.xml
