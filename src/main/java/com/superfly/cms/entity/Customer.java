@@ -2,6 +2,10 @@ package com.superfly.cms.entity;
 
 import java.util.Date;
 
+/**
+ * 对应customer_t用户表
+ */
+
 public class Customer {
     private Integer cusId;
     private String cusPassword;

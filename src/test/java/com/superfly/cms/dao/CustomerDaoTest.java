@@ -33,12 +33,12 @@ public class CustomerDaoTest {
     public void insertCustomer() {
         Customer customer = new Customer();
         customer.setCusPassword("admin");
-        customer.setCusName("王五");
+        customer.setCusName("666");
         customer.setCusSex("男");
         customer.setCusAge(20);
-        customer.setCusPhone("134567737");
+        customer.setCusPhone("1345677374");
         customer.setCusAddress("上海");
-        customer.setCusEmail("903046@qq.com");
+        customer.setCusEmail("9030476@qq.com");
 //        customer.setCusRegistrationDate();
         //        System.out.println(customer);
         int effectedNum = customerDao.insertCustomer(customer);
@@ -64,5 +64,7 @@ public class CustomerDaoTest {
 
     @Test
     public void deleteCustomer() {
+        int effectedNum = customerDao.deleteCustomer(8);
+        assertEquals(1,effectedNum);
     }
 }

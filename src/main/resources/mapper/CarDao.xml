@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.CarDao">
+
+    <select id="queryCar" resultType="com.superfly.cms.entity.Car">
+       select car_id,car_type,car_number
+       from car_t
+       order by car_type
+    </select>
+
+    <select id="queryCarById" resultType="com.superfly.cms.entity.Car">
+		SELECT car_id,car_type,car_number
+       from car_t
+		WHERE
+		car_id=#{carId}
+	</select>
+
+    <insert id="insertCar" useGeneratedKeys="true" keyProperty="carId"
+            keyColumn="car_id" parameterType="com.superfly.cms.entity.Car">
+		INSERT INTO
+		car_t(car_type,car_number)
+		VALUES
+		(#{carType},#{carNumber})
+	</insert>
+    <update id="updateCar" parameterType="com.superfly.cms.entity.Car">
+        update car_t
+        <set>
+            <if test="carType != null">car_type=#{carType},</if>
+            <if test="carNumber != null">car_number=#{carNumber}</if>
+        </set>
+        where car_id=#{carId}
+    </update>
+    <delete id="deleteCar">
+		DELETE FROM
+		car_t
+		WHERE
+		car_id=#{carId}
+	</delete>
+</mapper>

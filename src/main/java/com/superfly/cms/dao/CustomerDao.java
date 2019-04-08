@@ -34,8 +34,8 @@ public interface CustomerDao {
 
     /**
      * 通过传入的Id删除顾客列表
-     * @param customerId
+     * @param cusId
      * @return success:1 flase:0
      */
-    int deleteCustomer(int customerId);
+    int deleteCustomer(int cusId);
 }

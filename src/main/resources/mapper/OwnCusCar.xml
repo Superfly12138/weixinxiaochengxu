@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.OwnCusCarDao">
+
+    <select id="queryOwnCusCar" resultType="com.superfly.cms.entity.OwnCusCar">
+         select own_id,cus_id,car_id
+         from own_cus_car_t
+     </select>
+    <select id="queryOwnCusCarByCusId" resultType="com.superfly.cms.entity.OwnCusCar">
+		SELECT own_id,cus_id,car_id
+		FROM own_cus_car_t
+		WHERE
+		cus_id=#{cusId}
+	</select>
+    <select id="queryOwnCusCarByCarId" resultType="com.superfly.cms.entity.OwnCusCar">
+		SELECT own_id,cus_id,car_id
+		FROM own_cus_car_t
+		WHERE
+		car_id=#{carId}
+	</select>
+    <insert id="insertOwnCusCar" useGeneratedKeys="true" keyProperty="ownId"
+            keyColumn="own_id" parameterType="com.superfly.cms.entity.OwnCusCar">
+		INSERT INTO
+		own_cus_car_t(cus_id,car_id)
+		VALUES
+		(#{cusId},
+		#{carId})
+	</insert>
+    <update id="updateOwnCusCar" parameterType="com.superfly.cms.entity.OwnCusCar">
+        update own_cus_car_t
+        <set>
+            <if test="cusId != null">cus_id=#{cusId},</if>
+            <if test="carId != null">car_id=#{carId},</if>
+        </set>
+        where own_id=#{ownId}
+    </update>
+    <delete id="deleteOwnCusCar">
+		DELETE FROM
+		own_cus_car_t
+		WHERE
+		own_id=#{ownId}
+	</delete>
+</mapper>
