@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.FaultDefinitionDao">
+
+    <select id="queryFaultDefinition" resultType="com.superfly.cms.entity.FaultDefinition">
+       select fault_id,fault_name,fault_type,fault_instruction
+       from fault_definition_t
+       order by fault_type
+    </select>
+
+    <select id="queryFaultDefinitionById" resultType="com.superfly.cms.entity.FaultDefinition">
+		SELECT fault_id,fault_name,fault_type,fault_instruction
+       from fault_definition_t
+		WHERE
+		fault_id=#{faultId}
+	</select>
+
+    <insert id="insertFaultDefinition" useGeneratedKeys="true" keyProperty="faultId"
+            keyColumn="fault_id" parameterType="com.superfly.cms.entity.FaultDefinition">
+		INSERT INTO
+		fault_definition_t(fault_name,fault_type,fault_instruction)
+		VALUES
+		(#{faultName},#{faultType},#{faultInstruction})
+	</insert>
+    <update id="updateFaultDefinition" parameterType="com.superfly.cms.entity.FaultDefinition">
+        update fault_definition_t
+        <set>
+            <if test="faultName != null">fault_name=#{faultName},</if>
+            <if test="faultType != null">fault_type=#{faultType},</if>
+            <if test="faultInstruction != null">fault_instruction=#{faultInstruction}</if>
+        </set>
+        where fault_id=#{faultId}
+    </update>
+    <delete id="deleteFaultDefinition">
+		DELETE FROM
+		fault_definition_t
+		WHERE
+		fault_id=#{faultId}
+	</delete>
+</mapper>

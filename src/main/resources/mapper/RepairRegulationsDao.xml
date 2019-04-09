@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.RepairRegulationsDao">
+
+    <select id="queryRepairRegulations" resultType="com.superfly.cms.entity.RepairRegulations">
+       select repair_id,repair_name,repair_type,repair_money,repair_instruction
+       from repair_regulations_t
+       order by repair_type
+    </select>
+
+    <select id="queryRepairRegulationsById" resultType="com.superfly.cms.entity.RepairRegulations">
+		SELECT repair_id,repair_name,repair_type,repair_money,repair_instruction
+       from repair_regulations_t
+		WHERE
+		repair_id=#{repairId}
+	</select>
+
+    <insert id="insertRepairRegulations" useGeneratedKeys="true" keyProperty="repairId"
+            keyColumn="repair_id" parameterType="com.superfly.cms.entity.RepairRegulations">
+		INSERT INTO
+		repair_regulations_t(repair_name,repair_type,repair_money,repair_instruction)
+		VALUES
+		(#{repairName},#{repairType},#{repairMoney},#{repairInstruction})
+	</insert>
+    <update id="updateRepairRegulations" parameterType="com.superfly.cms.entity.RepairRegulations">
+        update repair_regulations_t
+        <set>
+            <if test="repairName != null">repair_name=#{repairName},</if>
+            <if test="repairType != null">repair_type=#{repairType},</if>
+            <if test="repairMoney != null">repair_money=#{repairMoney},</if>
+            <if test="repairInstruction != null">repair_instruction=#{repairInstruction}</if>
+        </set>
+        where repair_id=#{repairId}
+    </update>
+    <delete id="deleteRepairRegulations">
+		DELETE FROM
+		repair_regulations_t
+		WHERE
+		repair_id=#{repairId}
+	</delete>
+</mapper>

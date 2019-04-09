@@ -25,8 +25,8 @@ public class OwnCusCarDaoTest {
 
     @Test
     public void queryOwnCusCarByCusId() {
-        List<OwnCusCar> list = ownCusCarDao.queryOwnCusCarByCusId(6);
-        assertEquals(1,list.size());
+        List<OwnCusCar> list = ownCusCarDao.queryOwnCusCarByCusId(3);
+        assertEquals(2,list.size());
     }
 
     @Test
