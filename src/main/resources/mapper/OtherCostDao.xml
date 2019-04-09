@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.OtherCostDao">
+
+    <select id="queryOtherCost" resultType="com.superfly.cms.entity.OtherCost">
+       select other_cost_id,other_cost_name,other_cost_instruction
+       from other_cost_t
+    </select>
+
+    <select id="queryOtherCostById" resultType="com.superfly.cms.entity.OtherCost">
+		SELECT other_cost_id,other_cost_name,other_cost_instruction
+       from other_cost_t
+		WHERE
+		other_cost_id=#{otherCostId}
+	</select>
+
+    <insert id="insertOtherCost" useGeneratedKeys="true" keyProperty="otherCostId"
+            keyColumn="other_cost_id" parameterType="com.superfly.cms.entity.OtherCost">
+		INSERT INTO
+		other_cost_t(other_cost_name,other_cost_instruction)
+		VALUES
+		(#{otherCostName},#{otherCostInstruction})
+	</insert>
+    <update id="updateOtherCost" parameterType="com.superfly.cms.entity.OtherCost">
+        update other_cost_t
+        <set>
+            <if test="otherCostName != null">other_cost_name=#{otherCostName},</if>
+            <if test="otherCostInstruction != null">other_cost_instruction=#{otherCostInstruction}</if>
+        </set>
+        where other_cost_id=#{otherCostId}
+    </update>
+    <delete id="deleteOtherCost">
+		DELETE FROM
+		other_cost_t
+		WHERE
+		other_cost_id=#{otherCostId}
+	</delete>
+</mapper>
