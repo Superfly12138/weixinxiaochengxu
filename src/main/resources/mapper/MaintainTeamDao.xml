@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.MaintainTeamDao">
+
+    <select id="queryMaintainTeam" resultType="com.superfly.cms.entity.MaintainTeam">
+       select maintain_team_id,maintain_team_name,maintain_team_instruction
+       from maintain_team_t
+    </select>
+
+    <select id="queryMaintainTeamById" resultType="com.superfly.cms.entity.MaintainTeam">
+		SELECT maintain_team_id,maintain_team_name,maintain_team_instruction
+       from maintain_team_t
+		WHERE
+		maintain_team_id=#{maintainTeamId}
+	</select>
+
+    <insert id="insertMaintainTeam" useGeneratedKeys="true" keyProperty="maintainTeamId"
+            keyColumn="maintain_team_id" parameterType="com.superfly.cms.entity.MaintainTeam">
+		INSERT INTO
+		maintain_team_t(maintain_team_name,maintain_team_instruction)
+		VALUES
+		(#{maintainTeamName},#{maintainTeamInstruction})
+	</insert>
+    <update id="updateMaintainTeam" parameterType="com.superfly.cms.entity.MaintainTeam">
+        update maintain_team_t
+        <set>
+            <if test="maintainTeamName != null">maintain_team_name=#{maintainTeamName},</if>
+            <if test="maintainTeamInstruction != null">maintain_team_instruction=#{maintainTeamInstruction}</if>
+        </set>
+        where maintain_team_id=#{maintainTeamId}
+    </update>
+    <delete id="deleteMaintainTeam">
+		DELETE FROM
+		maintain_team_t
+		WHERE
+		maintain_team_id=#{maintainTeamId}
+	</delete>
+</mapper>
