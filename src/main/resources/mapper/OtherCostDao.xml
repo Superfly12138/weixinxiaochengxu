@@ -27,7 +27,7 @@
         update other_cost_t
         <set>
             <if test="otherCostName != null">other_cost_name=#{otherCostName},</if>
-            <if test="otherCostInstruction != null">other_cost_instruction=#{otherCostInstruction}</if>
+            other_cost_instruction=#{otherCostInstruction}
         </set>
         where other_cost_id=#{otherCostId}
     </update>

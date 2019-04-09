@@ -30,7 +30,7 @@
             <if test="repairName != null">repair_name=#{repairName},</if>
             <if test="repairType != null">repair_type=#{repairType},</if>
             <if test="repairMoney != null">repair_money=#{repairMoney},</if>
-            <if test="repairInstruction != null">repair_instruction=#{repairInstruction}</if>
+            repair_instruction=#{repairInstruction}
         </set>
         where repair_id=#{repairId}
     </update>

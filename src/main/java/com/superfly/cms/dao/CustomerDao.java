@@ -26,7 +26,7 @@ public interface CustomerDao {
     int insertCustomer(Customer customer);
 
     /**
-     * 更新顾客信息
+     * 更新顾客信息,注册时间不建议更新
      * @param customer
      * @return success:1 flase:0
      */

@@ -43,8 +43,8 @@
             <if test="cusAge != null">cus_age=#{cusAge},</if>
             <if test="cusPhone != null">cus_phone=#{cusPhone},</if>
             <if test="cusAddress != null">cus_address=#{cusAddress},</if>
-            <if test="cusEmail != null">cus_email=#{cusEmail},</if>
-            <if test="cusRegistrationDate != null">cus_registration_date=#{cusRegistrationDate}</if>
+            <if test="cusEmail != null">cus_email=#{cusEmail}</if>
+            <!--cus_registration_date=#{cusRegistrationDate}-->
         </set>
         where cus_id=#{cusId}
     </update>

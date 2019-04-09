@@ -29,7 +29,7 @@
         <set>
             <if test="faultName != null">fault_name=#{faultName},</if>
             <if test="faultType != null">fault_type=#{faultType},</if>
-            <if test="faultInstruction != null">fault_instruction=#{faultInstruction}</if>
+            fault_instruction=#{faultInstruction}
         </set>
         where fault_id=#{faultId}
     </update>

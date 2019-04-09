@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+
 public class CustomerDaoTest {
     @Autowired
     private CustomerDao customerDao;
@@ -39,7 +41,7 @@ public class CustomerDaoTest {
         customer.setCusPhone("1345677374");
         customer.setCusAddress("上海");
         customer.setCusEmail("9030476@qq.com");
-//        customer.setCusRegistrationDate();
+        customer.setCusRegistrationDate(new Date());
         //        System.out.println(customer);
         int effectedNum = customerDao.insertCustomer(customer);
         assertEquals(1,effectedNum);
@@ -48,16 +50,13 @@ public class CustomerDaoTest {
     @Test
     public void updateCustomer() {
         Customer customer = new Customer();
-        customer.setCusId(6);
+        customer.setCusId(9);
         customer.setCusPassword("admin");
         customer.setCusName("王五");
         customer.setCusSex("男");
         customer.setCusAge(21);
-        customer.setCusPhone("134567737");
-        customer.setCusAddress("上海");
-        customer.setCusEmail("903046@qq.com");
-//        customer.setCusRegistrationDate();
-        //        System.out.println(customer);
+        //注册时间不建议更新
+//      customer.setCusRegistrationDate(new Date());
         int effectedNum = customerDao.updateCustomer(customer);
         assertEquals(1,effectedNum);
     }

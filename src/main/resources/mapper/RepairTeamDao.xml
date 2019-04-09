@@ -27,7 +27,7 @@
         update repair_team_t
         <set>
             <if test="repairTeamName != null">repair_team_name=#{repairTeamName},</if>
-            <if test="repairTeamInstruction != null">repair_team_instruction=#{repairTeamInstruction}</if>
+            repair_team_instruction=#{repairTeamInstruction}
         </set>
         where repair_team_id=#{repairTeamId}
     </update>

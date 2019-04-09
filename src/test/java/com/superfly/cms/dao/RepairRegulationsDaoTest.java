@@ -49,7 +49,7 @@ public class RepairRegulationsDaoTest {
         repairRegulations.setRepairName("补胎");
         repairRegulations.setRepairType("轮胎修理");
         repairRegulations.setRepairMoney("60");
-        repairRegulations.setRepairInstruction(null);
+        repairRegulations.setRepairInstruction("修补轮胎");
         int effectedNum = repairRegulationsDao.updateRepairRegulations(repairRegulations);
         assertEquals(1,effectedNum);
     }

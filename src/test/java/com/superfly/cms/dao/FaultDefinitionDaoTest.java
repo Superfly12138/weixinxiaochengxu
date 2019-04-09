@@ -44,7 +44,7 @@ public class FaultDefinitionDaoTest {
         faultDefinition.setFaultId(2);
         faultDefinition.setFaultName("轮胎漏气");
         faultDefinition.setFaultType("轮胎故障");
-        faultDefinition.setFaultInstruction("轮胎不能正常工作");
+        faultDefinition.setFaultInstruction(null);
         int effectedNum = faultDefinitionDao.updateFaultDefinition(faultDefinition);
         assertEquals(1,effectedNum);
     }

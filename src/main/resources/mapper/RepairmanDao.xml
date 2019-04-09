@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.RepairmanDao">
+
+    <select id="queryRepairman" resultType="com.superfly.cms.entity.Repairman">
+       select repairman_id,repairman_password,repairman_name,repairman_sex,
+       repairman_age,repairman_phone,repairman_address,
+       repairman_email,repairman_registration_date,repair_team_id,maintain_team_id
+       from repairman_t
+       order by repair_team_id
+    </select>
+
+    <select id="queryRepairmanByRepairTeamId" resultType="com.superfly.cms.entity.Repairman">
+       select repairman_id,repairman_password,repairman_name,repairman_sex,
+       repairman_age,repairman_phone,repairman_address,
+       repairman_email,repairman_registration_date,repair_team_id,maintain_team_id
+       from repairman_t
+       WHERE
+		repair_team_id=#{repairTeamId}
+    </select>
+
+    <select id="queryRepairmanByMaintainTeamId" resultType="com.superfly.cms.entity.Repairman">
+       select repairman_id,repairman_password,repairman_name,repairman_sex,
+       repairman_age,repairman_phone,repairman_address,
+       repairman_email,repairman_registration_date,repair_team_id,maintain_team_id
+       from repairman_t
+       WHERE
+		maintain_team_id=#{maintainTeamId}
+    </select>
+
+    <select id="queryRepairmanById" resultType="com.superfly.cms.entity.Repairman">
+		SELECT repairman_id,repairman_password,repairman_name,repairman_sex,
+       repairman_age,repairman_phone,repairman_address,
+       repairman_email,repairman_registration_date,repair_team_id,maintain_team_id
+       from repairman_t
+		WHERE
+		repairman_id=#{repairmanId}
+	</select>
+
+    <insert id="insertRepairman" useGeneratedKeys="true" keyProperty="repairmanId"
+            keyColumn="repairman_id" parameterType="com.superfly.cms.entity.Repairman">
+		INSERT INTO
+		repairman_t(repairman_password,repairman_name,
+		repairman_sex,repairman_age,
+		repairman_phone,repairman_address,
+        repairman_email,repairman_registration_date,repair_team_id,maintain_team_id)
+		VALUES
+		(#{repairmanPassword},#{repairmanName},
+		#{repairmanSex},#{repairmanAge},
+		#{repairmanPhone},#{repairmanAddress},
+		#{repairmanEmail},#{repairmanRegistrationDate},#{repairTeamId},#{maintainTeamId})
+	</insert>
+    <update id="updateRepairman" parameterType="com.superfly.cms.entity.Repairman">
+        update repairman_t
+        <set>
+            <if test="repairmanPassword != null">repairman_password=#{repairmanPassword},</if>
+            <if test="repairmanName != null">repairman_name=#{repairmanName},</if>
+            <if test="repairmanSex != null">repairman_sex=#{repairmanSex},</if>
+            <if test="repairmanAge != null">repairman_age=#{repairmanAge},</if>
+            <if test="repairmanPhone != null">repairman_phone=#{repairmanPhone},</if>
+            <if test="repairmanAddress != null">repairman_address=#{repairmanAddress},</if>
+            <if test="repairmanEmail != null">repairman_email=#{repairmanEmail},</if>
+            repairman_registration_date=#{repairmanRegistrationDate},
+            repair_team_id=#{repairTeamId},
+            maintain_team_id=#{maintainTeamId}
+        </set>
+        where repairman_id=#{repairmanId}
+    </update>
+    <delete id="deleteRepairman">
+		DELETE FROM
+		repairman_t
+		WHERE
+		repairman_id=#{repairmanId}
+	</delete>
+</mapper>

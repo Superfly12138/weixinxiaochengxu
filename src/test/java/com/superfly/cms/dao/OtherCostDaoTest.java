@@ -43,7 +43,7 @@ public class OtherCostDaoTest {
     public void updateOtherCost() {
         OtherCost otherCost = new OtherCost();
         otherCost.setOtherCostId(2);
-        otherCost.setOtherCostInstruction("更换车垫很方便，代价很小。");
+        otherCost.setOtherCostInstruction("更换车垫很方便，代价很小呢。");
         int effectedNum = otherCostDao.updateOtherCost(otherCost);
         assertEquals(1,effectedNum);
     }

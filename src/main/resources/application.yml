@@ -16,3 +16,8 @@ spring:
 mybatis_config_file: mybatis-config.xml
 mapper_path: /mapper/**.xml
 type_alias_package: com.superfly.cms.entity
+#打印sql
+logging:
+  level:
+      com.superfly.cms.dao : debug
+

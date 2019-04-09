@@ -43,8 +43,9 @@ public class MaintainTeamDaoTest {
     @Test
     public void updateMaintainTeam() {
         MaintainTeam maintainTeam = new MaintainTeam();
-        maintainTeam.setMaintainTeamId(3);
-        maintainTeam.setMaintainTeamInstruction("B班组嗯");
+        maintainTeam.setMaintainTeamId(4);
+        maintainTeam.setMaintainTeamName("sb");
+        maintainTeam.setMaintainTeamInstruction("sss");
         int effectedNum = maintainTeamDao.updateMaintainTeam(maintainTeam);
         assertEquals(1,effectedNum);
     }

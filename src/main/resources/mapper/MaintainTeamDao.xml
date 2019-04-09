@@ -26,8 +26,8 @@
     <update id="updateMaintainTeam" parameterType="com.superfly.cms.entity.MaintainTeam">
         update maintain_team_t
         <set>
-            <if test="maintainTeamName != null">maintain_team_name=#{maintainTeamName},</if>
-            <if test="maintainTeamInstruction != null">maintain_team_instruction=#{maintainTeamInstruction}</if>
+            maintain_team_instruction=#{maintainTeamInstruction},
+            <if test="maintainTeamName != null">maintain_team_name=#{maintainTeamName}</if>
         </set>
         where maintain_team_id=#{maintainTeamId}
     </update>
