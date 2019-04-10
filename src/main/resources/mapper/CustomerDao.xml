@@ -20,6 +20,32 @@
 		WHERE
 		cus_id=#{cusId}
 	</select>
+    <select id="queryCustomerByName" resultType="com.superfly.cms.entity.Customer">
+		SELECT cus_id,cus_password,cus_name,cus_sex,
+       cus_age,cus_phone,cus_address,
+       cus_email,cus_registration_date
+       from customer_t
+		WHERE
+		cus_name=#{cusName}
+	</select>
+
+    <select id="queryCustomerByPhone" resultType="com.superfly.cms.entity.Customer">
+		SELECT cus_id,cus_password,cus_name,cus_sex,
+       cus_age,cus_phone,cus_address,
+       cus_email,cus_registration_date
+       from customer_t
+		WHERE
+		cus_phone=#{cusPhone}
+	</select>
+
+    <select id="queryCustomerByEmail" resultType="com.superfly.cms.entity.Customer">
+		SELECT cus_id,cus_password,cus_name,cus_sex,
+       cus_age,cus_phone,cus_address,
+       cus_email,cus_registration_date
+       from customer_t
+		WHERE
+		cus_email=#{cusEmail}
+	</select>
 
     <insert id="insertCustomer" useGeneratedKeys="true" keyProperty="cusId"
             keyColumn="cus_id" parameterType="com.superfly.cms.entity.Customer">
