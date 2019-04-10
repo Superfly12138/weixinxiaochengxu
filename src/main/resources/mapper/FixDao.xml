@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.FixDao">
+
+    <select id="queryFix" resultType="com.superfly.cms.entity.Fix">
+       SELECT fix_id, fix_actual_money, fix_order_date, fix_start_date,
+       fix_end_date, fix_over, repair_id, car_id,
+       repair_team_id, fault_id, other_cost_id
+       FROM fix_t;
+    </select>
+
+    <select id="queryFixByFixId" resultType="com.superfly.cms.entity.Fix">
+		SELECT fix_id, fix_actual_money, fix_order_date, fix_start_date,
+       fix_end_date, fix_over, repair_id, car_id,
+       repair_team_id, fault_id, other_cost_id
+       FROM fix_t
+		WHERE
+		fix_id=#{fixId}
+	</select>
+
+    <insert id="insertFix" useGeneratedKeys="true" keyProperty="fixId"
+            keyColumn="fix_id" parameterType="com.superfly.cms.entity.Fix">
+		INSERT INTO
+		fix_t(fix_actual_money, fix_order_date, fix_start_date,
+       fix_end_date, fix_over, repair_id, car_id,
+       repair_team_id, fault_id, other_cost_id)
+		VALUES
+		(#{fixActualMoney},#{fixOrderDate},#{fixStartDate},
+		#{fixEndDate},#{fixOver},#{repairId},#{carId},
+		#{repairTeamId},#{faultId},#{otherCostId})
+	</insert>
+    <update id="updateFix" parameterType="com.superfly.cms.entity.Fix">
+        update fix_t
+        <set>
+            fix_actual_money=#{fixActualMoney},
+            <if test="fixOrderDate != null">fix_order_date=#{fixOrderDate},</if>
+            fix_start_date=#{fixStartDate},
+            fix_end_date=#{fixEndDate},
+            <if test="fixOver != null">fix_over=#{fixOver},</if>
+            repair_id=#{repairId},
+            <if test="carId != null">car_id=#{carId},</if>
+            repair_team_id=#{repairTeamId},
+            fault_id=#{faultId},
+            other_cost_id=#{otherCostId}
+        </set>
+        where fix_id=#{fixId}
+    </update>
+    <delete id="deleteFix">
+		DELETE FROM
+		fix_t
+		WHERE
+		fix_id=#{fixId}
+	</delete>
+</mapper>
