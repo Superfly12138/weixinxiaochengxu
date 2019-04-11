@@ -21,7 +21,7 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
-    public Area getAreaById(int areaId) {
+    public Area getAreaById(Integer areaId) {
         return areaDao.queryAreaByid(areaId);
     }
 
@@ -69,7 +69,7 @@ public class AreaServiceImpl implements AreaService {
     }
     @Transactional
     @Override
-    public boolean deleteArea(int areaId) {
+    public boolean deleteArea(Integer areaId) {
         if (areaId > 0) {
             try {
                 // 删除区域信息

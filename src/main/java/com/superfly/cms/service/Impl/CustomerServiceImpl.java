@@ -1,7 +1,11 @@
 package com.superfly.cms.service.Impl;
 
+import com.superfly.cms.dao.CarDao;
 import com.superfly.cms.dao.CustomerDao;
+import com.superfly.cms.dao.OwnCusCarDao;
+import com.superfly.cms.entity.Car;
 import com.superfly.cms.entity.Customer;
+import com.superfly.cms.entity.OwnCusCar;
 import com.superfly.cms.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,20 +18,27 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerDao customerDao;
+    @Autowired
+    private CarDao carDao;
+    @Autowired
+    private OwnCusCarDao ownCusCarDao;
 
     @Override
-    public Customer getCustomerById(int cusId) {
+    public Customer getCustomerById(Integer cusId) {
         return customerDao.queryCustomerById(cusId);
     }
 
     @Transactional
     @Override
     public boolean addCustomer(Customer customer) {
+        if (customer == null) {
+            throw new RuntimeException("前端传入数据无效，添加客户失败！");
+        }
         //判断插入的数据是否为空
         if (customer.getCusName() != null && !"".equals(customer.getCusName())) {
             if (customer.getCusPassword() != null && !"".equals(customer.getCusPassword())) {
                 if (customer.getCusSex() != null && !"".equals(customer.getCusSex())) {
-                    if (customer.getCusAge() != null && !"".equals(customer.getCusAge())) {
+                    if (customer.getCusAge() != null) {
                         if (customer.getCusPhone() != null && !"".equals(customer.getCusPhone())) {
                             if (customer.getCusAddress() != null && !"".equals(customer.getCusAddress())) {
                                 if (customer.getCusEmail() != null && !"".equals(customer.getCusEmail())) {
@@ -149,10 +160,13 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional
     @Override
     public boolean modifyCustomer(Customer customer) {//判断更新的数据是否为空
+        if (customer == null) {
+            throw new RuntimeException("前端传入数据无效，添加客户失败！");
+        }
         if (customer.getCusName() != null && !"".equals(customer.getCusName())) {
             if (customer.getCusPassword() != null && !"".equals(customer.getCusPassword())) {
                 if (customer.getCusSex() != null && !"".equals(customer.getCusSex())) {
-                    if (customer.getCusAge() != null && !"".equals(customer.getCusAge())) {
+                    if (customer.getCusAge() != null) {
                         if (customer.getCusPhone() != null && !"".equals(customer.getCusPhone())) {
                             if (customer.getCusAddress() != null && !"".equals(customer.getCusAddress())) {
                                 if (customer.getCusEmail() != null && !"".equals(customer.getCusEmail())) {
@@ -194,7 +208,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional
     @Override
-    public boolean deleteCustomer(int cusId) {
+    public boolean deleteCustomer(Integer cusId) {
         try {
             //删除用户
             int effectedNum = customerDao.deleteCustomer(cusId);
@@ -204,7 +218,103 @@ public class CustomerServiceImpl implements CustomerService {
                 throw new RuntimeException("注销用户失败!");
             }
         } catch (Exception e) {
-            throw new RuntimeException("删除区域信息失败:" + e.toString());
+            throw new RuntimeException("注销用户失败:" + e.toString());
+        }
+    }
+
+    @Transactional
+    @Override
+    public boolean addCar(Car car, Integer cusId) {
+        //判断插入的数据是否为空
+        if (car == null) {
+            throw new RuntimeException("前端传入数据无效，添加汽车失败！");
+        }
+        if (car.getCarType() != null && !"".equals(car.getCarType())) {
+            if (car.getCarNumber() != null && !"".equals(car.getCarNumber())) {
+                if (cusId != null) {
+                    //数据都不为空时
+                    try {
+                        //先插入汽车信息
+                        //未插入car时，car.getCarId()为null,插入后则为id值
+                        //System.out.println(car.getCarId());
+                        int effectedNumber = carDao.insertCar(car);
+                        if (effectedNumber > 0) { //  插入车辆信息有效
+
+                            OwnCusCar ownCusCar = new OwnCusCar();
+                            ownCusCar.setCusId(cusId);
+                            ownCusCar.setCarId(car.getCarId());
+                            if (ownCusCarDao.insertOwnCusCar(ownCusCar) > 0) {
+                                return true;
+                            } else {
+                                throw new RuntimeException("添加汽车失败！");
+                            }
+                        } else {
+                            throw new RuntimeException("添加汽车失败！");
+                        }
+                    } catch (Exception e) {
+                        throw new RuntimeException("添加汽车失败！" + e.toString());
+                    }
+                } else {
+                    throw new RuntimeException("用户id为空,添加汽车失败！");
+                }
+
+            } else {
+                throw new RuntimeException("车牌不能为空！");
+            }
+
+        } else {
+            throw new RuntimeException("汽车类型不能为空！");
+        }
+
+    }
+
+    @Transactional
+    @Override
+    public boolean modifyCar(Car car) {
+        //判断插入的数据是否为空
+        if (car == null) {
+            throw new RuntimeException("前端传入数据无效，添加汽车失败！");
+        }
+        if (car.getCarType() != null && !"".equals(car.getCarType())) {
+            if (car.getCarNumber() != null && !"".equals(car.getCarNumber())) {
+                //数据都不为空时
+                try {
+                    int effectedNumber = carDao.updateCar(car);
+                    if (effectedNumber > 0) { //  更新车辆信息有效
+                        return true;
+                    } else {
+                        throw new RuntimeException("添加汽车失败！");
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException("添加汽车失败！" + e.toString());
+                }
+
+            } else {
+                throw new RuntimeException("车牌不能为空！");
+            }
+
+        } else {
+            throw new RuntimeException("汽车类型不能为空！");
+        }
+    }
+
+    @Transactional
+    @Override
+    public boolean deleteCar(Integer carId) {
+        if (carId != null && carId > 0) {
+            try {
+                //删除汽车
+                int effectedNum = carDao.deleteCar(carId);
+                if (effectedNum > 0) {
+                    return true;
+                } else {
+                    throw new RuntimeException("删除汽车失败!");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("删除汽车失败:" + e.toString());
+            }
+        } else {
+            throw new RuntimeException("carId不正确！");
         }
     }
 }

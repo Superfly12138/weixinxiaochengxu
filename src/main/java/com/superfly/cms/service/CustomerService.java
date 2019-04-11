@@ -1,5 +1,6 @@
 package com.superfly.cms.service;
 
+import com.superfly.cms.entity.Car;
 import com.superfly.cms.entity.Customer;
 
 public interface CustomerService {
@@ -8,7 +9,7 @@ public interface CustomerService {
      * @param cusId
      * @return Customer
      */
-    Customer getCustomerById(int cusId);
+    Customer getCustomerById(Integer cusId);
     /**
      * 注册
      * @param customer
@@ -50,5 +51,30 @@ public interface CustomerService {
      * @param cusId
      * @return success:true else:false
      */
-    boolean deleteCustomer(int cusId);
+    boolean deleteCustomer(Integer cusId);
+
+
+
+    /**
+     * 添加汽车信息
+     * @param car
+     * @param cusId
+     * @return success:true else:false
+     */
+    boolean addCar(Car car,Integer cusId);
+
+    /**
+     * 修改车辆信息
+     * @param car 传入的汽车信息包括汽车编号
+     * @return success:true else:false
+     */
+    boolean modifyCar(Car car);
+
+    /**
+     * 删除汽车信息
+     * @param carId
+     * @return success:true else:false
+     */
+    boolean deleteCar(Integer carId);
+
 }

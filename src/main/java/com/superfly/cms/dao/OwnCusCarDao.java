@@ -16,14 +16,14 @@ public interface OwnCusCarDao {
      * @param cusId
      * @return
      */
-    List<OwnCusCar> queryOwnCusCarByCusId(int cusId);
+    List<OwnCusCar> queryOwnCusCarByCusId(Integer cusId);
 
     /**
      * 通过车辆id查询顾客拥有信息
      * @param carId
      * @return
      */
-    OwnCusCar queryOwnCusCarByCarId(int carId);
+    OwnCusCar queryOwnCusCarByCarId(Integer carId);
 
     /**
      * 插入一条拥有信息
@@ -44,5 +44,5 @@ public interface OwnCusCarDao {
      * @param ownId
      * @return
      */
-    int deleteOwnCusCar(int ownId);
+    int deleteOwnCusCar(Integer ownId);
 }

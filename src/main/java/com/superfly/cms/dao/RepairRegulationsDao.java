@@ -16,7 +16,7 @@ public interface RepairRegulationsDao {
      * @param repairId
      * @return
      */
-    RepairRegulations queryRepairRegulationsById(int repairId);
+    RepairRegulations queryRepairRegulationsById(Integer repairId);
     /**
      * 插入一条故障信息
      * @param repairRegulations
@@ -36,5 +36,5 @@ public interface RepairRegulationsDao {
      * @param repairId
      * @return success:1 flase:0
      */
-    int deleteRepairRegulations(int repairId);
+    int deleteRepairRegulations(Integer repairId);
 }

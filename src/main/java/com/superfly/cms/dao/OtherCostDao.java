@@ -16,7 +16,7 @@ public interface OtherCostDao {
      * @param otherCostId
      * @return
      */
-    OtherCost queryOtherCostById(int otherCostId);
+    OtherCost queryOtherCostById(Integer otherCostId);
     /**
      * 插入一条故障信息
      * @param otherCost
@@ -36,7 +36,7 @@ public interface OtherCostDao {
      * @param otherCostId
      * @return success:1 flase:0
      */
-    int deleteOtherCost(int otherCostId);
+    int deleteOtherCost(Integer otherCostId);
 
 
 }

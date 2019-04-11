@@ -16,7 +16,7 @@ public interface CarDao {
      * @param carId
      * @return 单个车辆
      */
-     Car queryCarById(int carId);
+     Car queryCarById(Integer carId);
 
     /**
      * 插入车辆信息
@@ -37,5 +37,5 @@ public interface CarDao {
      * @param carId
      * @return success:1 flase:0
      */
-    int deleteCar(int carId);
+    int deleteCar(Integer carId);
 }

@@ -16,7 +16,7 @@ public interface CustomerDao {
      * 通过Id查询顾客
      * @return 单个顾客
      */
-    Customer queryCustomerById(int cusId);
+    Customer queryCustomerById(Integer cusId);
     /**
      * @param cusName
      * 通过name查询顾客
@@ -55,5 +55,5 @@ public interface CustomerDao {
      * @param cusId
      * @return success:1 flase:0
      */
-    int deleteCustomer(int cusId);
+    int deleteCustomer(Integer cusId);
 }

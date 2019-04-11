@@ -16,7 +16,7 @@ public interface AreaDao {
      * @param areaId
      * @return area
      */
-    Area queryAreaByid(int areaId);
+    Area queryAreaByid(Integer areaId);
 
     /**
      *
@@ -37,5 +37,5 @@ public interface AreaDao {
      * @param areaId
      * @return
      */
-    int deleteArea(int areaId);
+    int deleteArea(Integer areaId);
 }

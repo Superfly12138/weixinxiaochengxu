@@ -16,21 +16,21 @@ public interface RepairmanDao {
      * @param repairTeamId
      * @return 维修人员列表
      */
-    List<Repairman> queryRepairmanByRepairTeamId(int repairTeamId);
+    List<Repairman> queryRepairmanByRepairTeamId(Integer repairTeamId);
 
     /**
      * 根据保养班组id查询维修人员
      * @param maintainTeamId
      * @return 维修人员列表
      */
-    List<Repairman> queryRepairmanByMaintainTeamId(int maintainTeamId);
+    List<Repairman> queryRepairmanByMaintainTeamId(Integer maintainTeamId);
 
     /**
      * @param repairmanId
      * 通过维修Id查询维修人员
      * @return 单个维修人员
      */
-    Repairman queryRepairmanById(int repairmanId);
+    Repairman queryRepairmanById(Integer repairmanId);
 
     /**
      * 插入维修人员信息
@@ -51,5 +51,5 @@ public interface RepairmanDao {
      * @param repairmanId
      * @return success:1 flase:0
      */
-    int deleteRepairman(int repairmanId);
+    int deleteRepairman(Integer repairmanId);
 }

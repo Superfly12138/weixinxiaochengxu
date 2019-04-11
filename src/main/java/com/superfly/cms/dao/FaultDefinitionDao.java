@@ -16,7 +16,7 @@ public interface FaultDefinitionDao {
      * @param faultId
      * @return
      */
-    FaultDefinition queryFaultDefinitionById(int faultId);
+    FaultDefinition queryFaultDefinitionById(Integer faultId);
     /**
      * 插入一条故障信息
      * @param faultDefinition
@@ -36,6 +36,6 @@ public interface FaultDefinitionDao {
      * @param faultId
      * @return success:1 flase:0
      */
-    int deleteFaultDefinition(int faultId);
+    int deleteFaultDefinition(Integer faultId);
 
 }

@@ -16,7 +16,7 @@ public interface FixDao {
      * @param fixId
      * @return
      */
-    Fix queryFixByFixId(int fixId);
+    Fix queryFixByFixId(Integer fixId);
 
 
     /**
@@ -38,5 +38,5 @@ public interface FixDao {
      * @param fixId
      * @return
      */
-    int deleteFix(int fixId);
+    int deleteFix(Integer fixId);
 }

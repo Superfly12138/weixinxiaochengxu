@@ -17,7 +17,7 @@ public interface MaintainTeamDao {
      * @param maintainTeamId
      * @return
      */
-    MaintainTeam queryMaintainTeamById(int maintainTeamId);
+    MaintainTeam queryMaintainTeamById(Integer maintainTeamId);
     /**
      * 插入一条故障信息
      * @param maintainTeam
@@ -37,5 +37,5 @@ public interface MaintainTeamDao {
      * @param maintainTeamId
      * @return success:1 flase:0
      */
-    int deleteMaintainTeam(int maintainTeamId);
+    int deleteMaintainTeam(Integer maintainTeamId);
 }

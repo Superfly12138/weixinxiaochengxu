@@ -16,7 +16,7 @@ public interface RepairTeamDao {
      * @param repairTeamId
      * @return
      */
-    RepairTeam queryRepairTeamById(int repairTeamId);
+    RepairTeam queryRepairTeamById(Integer repairTeamId);
     /**
      * 插入一条故障信息
      * @param repairTeam
@@ -36,5 +36,5 @@ public interface RepairTeamDao {
      * @param repairTeamId
      * @return success:1 flase:0
      */
-    int deleteRepairTeam(int repairTeamId);
+    int deleteRepairTeam(Integer repairTeamId);
 }

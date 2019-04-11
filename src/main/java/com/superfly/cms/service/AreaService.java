@@ -19,7 +19,7 @@ public interface AreaService {
      * @param areaId
      * @return
      */
-    Area getAreaById(int areaId);
+    Area getAreaById(Integer areaId);
 
     /**
      * 增加区域信息
@@ -43,5 +43,5 @@ public interface AreaService {
      * @param areaId
      * @return
      */
-    boolean deleteArea(int areaId);
+    boolean deleteArea(Integer areaId);
 }
