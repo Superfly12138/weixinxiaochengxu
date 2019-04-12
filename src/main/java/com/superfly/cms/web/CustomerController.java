@@ -3,6 +3,7 @@ package com.superfly.cms.web;
 import com.alibaba.fastjson.JSON;
 import com.superfly.cms.entity.Car;
 import com.superfly.cms.entity.Customer;
+import com.superfly.cms.entity.Fix;
 import com.superfly.cms.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -196,6 +197,25 @@ public class CustomerController {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         modelMap.put("success", customerService.deleteCar(carId));
         return modelMap;
+    }
+
+    /**
+     * 新建维修单
+     * @param jsonString contains(carId,faultId)
+     * @return
+     */
+    @RequestMapping(value = "/addfix", method = RequestMethod.POST)
+    private Map<String, Object> addFix(@RequestBody String jsonString) {
+        try {
+            //将接收到的json转换成Map
+            Map map = (Map) JSON.parse(jsonString);
+            Fix fix = JSON.toJavaObject((JSON) map.get("Fix"), com.superfly.cms.entity.Fix.class);
+            Map<String, Object> modelMap = new HashMap<String, Object>();
+            modelMap.put("success", customerService.addFix(fix));
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
     }
 
 }

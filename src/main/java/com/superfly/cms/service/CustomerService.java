@@ -2,6 +2,7 @@ package com.superfly.cms.service;
 
 import com.superfly.cms.entity.Car;
 import com.superfly.cms.entity.Customer;
+import com.superfly.cms.entity.Fix;
 
 import java.util.List;
 
@@ -96,5 +97,11 @@ public interface CustomerService {
      * @return success:true else:false
      */
     boolean deleteCar(Integer carId);
+    /**
+     * 新建维修单信息
+     * @param fix
+     * @return true or false
+     */
+    boolean addFix(Fix fix);
 
 }

@@ -38,6 +38,32 @@
 		WHERE
 		repairman_id=#{repairmanId}
 	</select>
+    <select id="queryRepairmanByName" resultType="com.superfly.cms.entity.Repairman">
+		SELECT repairman_id,repairman_password,repairman_name,repairman_sex,
+       repairman_age,repairman_phone,repairman_address,
+       repairman_email,repairman_registration_date,repair_team_id,maintain_team_id
+       from repairman_t
+		WHERE
+		repairman_name=#{repairmanName}
+	</select>
+
+    <select id="queryRepairmanByPhone" resultType="com.superfly.cms.entity.Repairman">
+		SELECT repairman_id,repairman_password,repairman_name,repairman_sex,
+       repairman_age,repairman_phone,repairman_address,
+       repairman_email,repairman_registration_date,repair_team_id,maintain_team_id
+       from repairman_t
+		WHERE
+		repairman_phone=#{repairmanPhone}
+	</select>
+
+    <select id="queryRepairmanByEmail" resultType="com.superfly.cms.entity.Repairman">
+		SELECT repairman_id,repairman_password,repairman_name,repairman_sex,
+       repairman_age,repairman_phone,repairman_address,
+       repairman_email,repairman_registration_date,repair_team_id,maintain_team_id
+       from repairman_t
+		WHERE
+		repairman_email=#{repairmanEmail}
+	</select>
 
     <insert id="insertRepairman" useGeneratedKeys="true" keyProperty="repairmanId"
             keyColumn="repairman_id" parameterType="com.superfly.cms.entity.Repairman">

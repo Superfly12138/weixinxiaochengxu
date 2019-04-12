@@ -720,4 +720,6 @@ public class ManagerServiceImpl implements ManagerService {
             throw new RuntimeException("删除维修班组信息失败:" + e.toString());
         }
     }
+
+
 }

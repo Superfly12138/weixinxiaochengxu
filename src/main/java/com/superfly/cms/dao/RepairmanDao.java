@@ -26,11 +26,29 @@ public interface RepairmanDao {
     List<Repairman> queryRepairmanByMaintainTeamId(Integer maintainTeamId);
 
     /**
-     * @param repairmanId
      * 通过维修Id查询维修人员
+     * @param repairmanId  维修Id
      * @return 单个维修人员
      */
     Repairman queryRepairmanById(Integer repairmanId);
+    /**
+     * @param repairmanName 通过name查询维修人员
+     * @return 维修人员列表
+     */
+    List<Repairman> queryRepairmanByName(String repairmanName);
+
+    /**
+     * @param repairmanPhone 通过手机号查询维修人员
+     * @return 单个维修人员
+     */
+    Repairman queryRepairmanByPhone(String repairmanPhone);
+
+    /**
+     * @param repairmanEmail 通过邮箱查询维修人员
+     * @return 单个维修人员
+     */
+    Repairman queryRepairmanByEmail(String repairmanEmail);
+
 
     /**
      * 插入维修人员信息

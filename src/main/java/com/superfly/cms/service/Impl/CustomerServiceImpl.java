@@ -2,9 +2,11 @@ package com.superfly.cms.service.Impl;
 
 import com.superfly.cms.dao.CarDao;
 import com.superfly.cms.dao.CustomerDao;
+import com.superfly.cms.dao.FixDao;
 import com.superfly.cms.dao.OwnCusCarDao;
 import com.superfly.cms.entity.Car;
 import com.superfly.cms.entity.Customer;
+import com.superfly.cms.entity.Fix;
 import com.superfly.cms.entity.OwnCusCar;
 import com.superfly.cms.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class CustomerServiceImpl implements CustomerService {
     private CarDao carDao;
     @Autowired
     private OwnCusCarDao ownCusCarDao;
+    @Autowired
+    private FixDao fixDao;
 
     @Override
     public Customer getCustomerById(Integer cusId) {
@@ -47,9 +51,10 @@ public class CustomerServiceImpl implements CustomerService {
                         if (customer.getCusPhone() != null && !"".equals(customer.getCusPhone())) {
                             if (customer.getCusAddress() != null && !"".equals(customer.getCusAddress())) {
                                 if (customer.getCusEmail() != null && !"".equals(customer.getCusEmail())) {
-                                    //设置注册时间
-                                    customer.setCusRegistrationDate(new Date());
+
                                     try {
+                                        //设置注册时间
+                                        customer.setCusRegistrationDate(new Date());
                                         int effectedNumber = customerDao.insertCustomer(customer);
                                         if (effectedNumber > 0) {
                                             return true;
@@ -342,6 +347,31 @@ public class CustomerServiceImpl implements CustomerService {
             }
         } else {
             throw new RuntimeException("carId不正确！");
+        }
+    }
+    /**
+     * 新建维修单信息
+     *
+     * @param fix
+     * @return true or false
+     */
+    @Transactional
+    @Override
+    public boolean addFix(Fix fix) {
+        if (fix == null) {
+            throw new RuntimeException("前端传入数据无效，新建维修单失败！");
+        }
+        try {
+            fix.setFixOrderDate(new Date());
+            fix.setFixOver(0);
+            int effectedNumber = fixDao.insertFix(fix);
+            if (effectedNumber > 0) {
+                return true;
+            } else {
+                throw new RuntimeException("更新失败！");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("更新失败！" + e.toString());
         }
     }
 }
