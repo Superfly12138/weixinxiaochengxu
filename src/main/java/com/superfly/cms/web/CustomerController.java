@@ -129,6 +129,18 @@ public class CustomerController {
     }
 
     /**
+     * 通过顾客Id查询拥有的汽车信息
+     * @param cusId
+     * @return CarList
+     */
+    @RequestMapping(value = "/getcarsbycusid", method = RequestMethod.GET)
+    private Map<String, Object> getCarsByCusId(Integer cusId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Car> carList= customerService.queryCarList(cusId);
+        modelMap.put("Cars", carList);
+        return modelMap;
+    }
+    /**
      * 添加一辆车
      *
      * @param jsonString json格式的字符串，包括car对象和cusId
@@ -155,7 +167,7 @@ public class CustomerController {
     /**
      * 更新用户的车辆信息
      *
-     * @param jsonString json格式的字符串，包括car对象和cusId
+     * @param jsonString json格式的字符串，car对象,包括carId
      * @return success:true or false
      */
     @RequestMapping(value = "/modififyCar", method = RequestMethod.POST)

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getCustomerById(Integer cusId) {
-        return customerDao.queryCustomerById(cusId);
+        try {
+            return customerDao.queryCustomerById(cusId);
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
     }
 
     @Transactional
@@ -222,6 +227,28 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+    @Override
+    public List<Car> queryCarList(Integer cusId) {
+        try {
+            //通过客户Id查询到所有的拥有信息
+            List<OwnCusCar> list = ownCusCarDao.queryOwnCusCarByCusId(cusId);
+            if (list.size() > 0) {
+                List<Car> listCar = new ArrayList<>();
+                for (OwnCusCar own : list) {
+                    //通过拥有信息查询到汽车Id,通过汽车Id查询到汽车信息,放入list中
+                    listCar.add(carDao.queryCarById(own.getCarId()));
+                }
+
+                return listCar;
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("查询失败!" + e.toString());
+        }
+    }
+
     @Transactional
     @Override
     public boolean addCar(Car car, Integer cusId) {
@@ -283,10 +310,10 @@ public class CustomerServiceImpl implements CustomerService {
                     if (effectedNumber > 0) { //  更新车辆信息有效
                         return true;
                     } else {
-                        throw new RuntimeException("添加汽车失败！");
+                        throw new RuntimeException("更新汽车失败！effectednum<0");
                     }
                 } catch (Exception e) {
-                    throw new RuntimeException("添加汽车失败！" + e.toString());
+                    throw new RuntimeException("更新汽车失败！" + e.toString());
                 }
 
             } else {

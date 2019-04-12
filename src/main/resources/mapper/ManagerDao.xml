@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.ManagerDao">
+
+    <select id="queryManager" resultType="com.superfly.cms.entity.Manager">
+       select manager_id,manager_password,manager_name,manager_sex,
+       manager_age,manager_phone,manager_address,
+       manager_email,manager_registration_date
+       from manager_t
+       order by manager_id
+    </select>
+
+    <select id="queryManagerById" resultType="com.superfly.cms.entity.Manager">
+		SELECT manager_id,manager_password,manager_name,manager_sex,
+       manager_age,manager_phone,manager_address,
+       manager_email,manager_registration_date
+       from manager_t
+		WHERE
+		manager_id=#{managerId}
+	</select>
+    <select id="queryManagerByName" resultType="com.superfly.cms.entity.Manager">
+		SELECT manager_id,manager_password,manager_name,manager_sex,
+       manager_age,manager_phone,manager_address,
+       manager_email,manager_registration_date
+       from manager_t
+		WHERE
+		manager_name=#{managerName}
+	</select>
+
+    <select id="queryManagerByPhone" resultType="com.superfly.cms.entity.Manager">
+		SELECT manager_id,manager_password,manager_name,manager_sex,
+       manager_age,manager_phone,manager_address,
+       manager_email,manager_registration_date
+       from manager_t
+		WHERE
+		manager_phone=#{managerPhone}
+	</select>
+
+    <select id="queryManagerByEmail" resultType="com.superfly.cms.entity.Manager">
+		SELECT manager_id,manager_password,manager_name,manager_sex,
+       manager_age,manager_phone,manager_address,
+       manager_email,manager_registration_date
+       from manager_t
+		WHERE
+		manager_email=#{managerEmail}
+	</select>
+
+    <insert id="insertManager" useGeneratedKeys="true" keyProperty="managerId"
+            keyColumn="manager_id" parameterType="com.superfly.cms.entity.Manager">
+		INSERT INTO
+		manager_t(manager_password,manager_name,
+		manager_sex,manager_age,
+		manager_phone,manager_address,
+        manager_email,manager_registration_date)
+		VALUES
+		(#{managerPassword},#{managerName},
+		#{managerSex},#{managerAge},
+		#{managerPhone},#{managerAddress},
+		#{managerEmail},#{managerRegistrationDate})
+	</insert>
+    <update id="updateManager" parameterType="com.superfly.cms.entity.Manager">
+        update manager_t
+        <set>
+            <if test="managerPassword != null">manager_password=#{managerPassword},</if>
+            <if test="managerName != null">manager_name=#{managerName},</if>
+            <if test="managerSex != null">manager_sex=#{managerSex},</if>
+            <if test="managerAge != null">manager_age=#{managerAge},</if>
+            <if test="managerPhone != null">manager_phone=#{managerPhone},</if>
+            <if test="managerAddress != null">manager_address=#{managerAddress},</if>
+            <if test="managerEmail != null">manager_email=#{managerEmail}</if>
+            <!--manager_registration_date=#{managerRegistrationDate}-->
+        </set>
+        where manager_id=#{managerId}
+    </update>
+    <delete id="deleteManager">
+		DELETE FROM
+		manager_t
+		WHERE
+		manager_id=#{managerId}
+	</delete>
+</mapper>
