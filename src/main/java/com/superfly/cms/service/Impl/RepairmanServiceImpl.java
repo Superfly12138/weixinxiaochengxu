@@ -1,11 +1,13 @@
 package com.superfly.cms.service.Impl;
 
-import com.superfly.cms.dao.RepairTeamDao;
+import com.superfly.cms.dao.FixDao;
 import com.superfly.cms.dao.RepairmanDao;
+import com.superfly.cms.entity.Fix;
 import com.superfly.cms.entity.Repairman;
 import com.superfly.cms.service.RepairmanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -14,6 +16,9 @@ import java.util.List;
 public class RepairmanServiceImpl implements RepairmanService {
     @Autowired
     private RepairmanDao repairmanDao;
+    @Autowired
+    private FixDao fixDao;
+
     /**
      * 根据维修人员Id获取维修人员信息
      *
@@ -35,6 +40,7 @@ public class RepairmanServiceImpl implements RepairmanService {
      * @param repairman
      * @return success:true else:false
      */
+    @Transactional
     @Override
     public boolean addRepairman(Repairman repairman) {
         if (repairman == null) {
@@ -189,6 +195,7 @@ public class RepairmanServiceImpl implements RepairmanService {
      * @param repairman
      * @return success:true else:false
      */
+    @Transactional
     @Override
     public boolean modifyRepairman(Repairman repairman) {
         if (repairman == null) {
@@ -242,6 +249,7 @@ public class RepairmanServiceImpl implements RepairmanService {
      * @param repairmanId
      * @return success:true else:false
      */
+    @Transactional
     @Override
     public boolean deleteRepairman(Integer repairmanId) {
         try {
@@ -254,6 +262,128 @@ public class RepairmanServiceImpl implements RepairmanService {
             }
         } catch (Exception e) {
             throw new RuntimeException("注销用户失败:" + e.toString());
+        }
+    }
+
+    /**
+     * 查询所有的维修信息
+     *
+     * @return
+     */
+    @Override
+    public List<Fix> queryFixList() {
+        try {
+            return fixDao.queryFix();
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    /**
+     * 根据维修Id查询维修信息
+     *
+     * @param fixId
+     * @return
+     */
+    @Override
+    public Fix queryFixByFixId(Integer fixId) {
+        try {
+            return fixDao.queryFixByFixId(fixId);
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    /**
+     * 通过维修人员所在维修组编号查询维修信息
+     *
+     * @param repairTeamId
+     * @return
+     */
+    @Override
+    public List<Fix> queryFixByRepairTeamId(Integer repairTeamId) {
+        try {
+            return fixDao.queryFixByRepairTeamId(repairTeamId);
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+
+    /**
+     * 接受维修单（要求存在于维修班组,前端传入的数据有，包括fixId在内的所有信息）
+     *
+     * @param fix
+     * @return
+     */
+    @Transactional
+    @Override
+    public boolean acceptFix(Fix fix) {
+        if (fix == null) {
+            throw new RuntimeException("前端传入数据无效，更新信息失败！");
+        }
+        if (fix.getRepairTeamId() != null && !"".equals(fix.getRepairTeamId())) {
+            if (fix.getRepairId() != null && !"".equals(fix.getRepairId())) {
+                if (fix.getFixOver() == 0) {
+                    try {
+                        fix.setFixStartDate(new Date());
+                        fix.setFixOver(1);
+                        int effectedNumber = fixDao.updateFix(fix);
+                        if (effectedNumber > 0) {
+                            return true;
+                        } else {
+                            throw new RuntimeException("接受维修单失败！");
+                        }
+                    } catch (Exception e) {
+                        throw new RuntimeException("接受维修单失败！" + e.toString());
+                    }
+                } else {
+                    throw new RuntimeException("不能接受改维修单！");
+                }
+            } else {
+                throw new RuntimeException("维修规定未选择！");
+            }
+        } else {
+            throw new RuntimeException("该维修人员暂未存在于维修班组，请选择维修班组后才能接收维修单！");
+        }
+
+    }
+
+    /**
+     * 完成维修单（前端传入的数据有，包括fixId在内的所有信息）
+     *
+     * @param fix
+     * @return
+     */
+    @Transactional
+    @Override
+    public boolean finishFix(Fix fix) {
+        if (fix == null) {
+            throw new RuntimeException("前端传入数据无效，更新信息失败！");
+        }
+        if (fix.getFixActualMoney() != null && !"".equals(fix.getFixActualMoney())) {
+            if (fix.getOtherCostId() != null && !"".equals(fix.getOtherCostId())) {
+                if (fix.getFixOver() == 1) {
+                    try {
+                        fix.setFixEndDate(new Date());
+                        fix.setFixOver(2);
+                        int effectedNumber = fixDao.updateFix(fix);
+                        if (effectedNumber > 0) {
+                            return true;
+                        } else {
+                            throw new RuntimeException("完成维修单失败！");
+                        }
+                    } catch (Exception e) {
+                        throw new RuntimeException("完成维修单失败！" + e.toString());
+                    }
+                } else {
+                    throw new RuntimeException("完成维修单失败！");
+                }
+            } else {
+                throw new RuntimeException("其他费用无效！");
+            }
+        } else {
+            throw new RuntimeException("维修金额无效！");
         }
     }
 }

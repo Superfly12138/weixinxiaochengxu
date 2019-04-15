@@ -19,7 +19,14 @@
 		WHERE
 		fix_id=#{fixId}
 	</select>
-
+    <select id="queryFixByRepairTeamId" resultType="com.superfly.cms.entity.Fix">
+       SELECT fix_id, fix_actual_money, fix_order_date, fix_start_date,
+       fix_end_date, fix_over, repair_id, car_id,
+       repair_team_id, fault_id, other_cost_id
+       FROM fix_t
+       WHERE
+		repair_team_id=#{repairTeamId}
+    </select>
     <insert id="insertFix" useGeneratedKeys="true" keyProperty="fixId"
             keyColumn="fix_id" parameterType="com.superfly.cms.entity.Fix">
 		INSERT INTO

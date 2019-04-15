@@ -18,6 +18,13 @@ public interface FixDao {
      */
     Fix queryFixByFixId(Integer fixId);
 
+    /**
+     * 通过维修人员所在维修组编号查询维修信息
+     * @param repairTeamId
+     * @return
+     */
+    List<Fix> queryFixByRepairTeamId(Integer repairTeamId);
+
 
     /**
      * 插入一条拥有信息
