@@ -1,6 +1,8 @@
 package com.superfly.cms.web;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.superfly.cms.entity.Car;
 import com.superfly.cms.entity.Customer;
 import com.superfly.cms.entity.Fix;
@@ -141,6 +143,37 @@ public class CustomerController {
         modelMap.put("Cars", carList);
         return modelMap;
     }
+    /**
+     * 通过顾客Id查询拥有的汽车信息（分页方式）
+     * @param pageNum  当前页码
+     * @param pageSize  页内大小
+     * @param cusId  顾客Id
+     * @return CarList
+     */
+    @RequestMapping(value = "/getcarsbycusid_p", method = RequestMethod.GET)
+    private Map<String, Object> getCarsByCusId_P(Integer pageNum,Integer pageSize,Integer cusId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        try {
+            //加入这句，可以直接把list的数据根据分页规则重新封装
+            Page page = PageHelper.startPage(pageNum,pageSize,true);
+
+            List<Car> carList= customerService.queryCarList(cusId);
+            //总数据条数
+            modelMap.put("total", page.getTotal());
+            //当前页
+            modelMap.put("nowPage", pageNum);
+            //数据
+            modelMap.put("Cars", carList);
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+
+    }
+
+
+
+
     /**
      * 添加一辆车
      *

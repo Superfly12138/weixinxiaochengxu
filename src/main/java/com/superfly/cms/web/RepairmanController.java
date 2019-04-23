@@ -1,6 +1,9 @@
 package com.superfly.cms.web;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.superfly.cms.entity.Car;
 import com.superfly.cms.entity.Fix;
 import com.superfly.cms.entity.Repairman;
 import com.superfly.cms.service.RepairmanService;
@@ -143,6 +146,51 @@ public class RepairmanController {
         modelMap.put("Fix", fixList);
         return modelMap;
     }
+    /**
+     * 查询所有的维修信息(分页)
+     * @param pageNum  当前页码
+     * @param pageSize  页内大小
+     * @return List<fix>
+     */
+    @RequestMapping(value = "/getfixlist_p", method = RequestMethod.GET)
+    private Map<String, Object> getFixList_p(Integer pageNum,Integer pageSize) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        try {
+            //加入这句，可以直接把list的数据根据分页规则重新封装
+            Page page = PageHelper.startPage(pageNum,pageSize,true);
+
+            List<Fix> fixList = repairmanService.queryFixList();
+            //总数据条数
+            modelMap.put("total", page.getTotal());
+            //当前页
+            modelMap.put("nowPage", pageNum);
+            //数据
+            modelMap.put("Fix", fixList);
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+//    @RequestMapping(value = "/getfixlist_p", method = RequestMethod.GET)
+//    private Map<String, Object> getFixList_p(Integer pageNum,Integer pageSize) {
+//        Map<String, Object> modelMap = new HashMap<String, Object>();
+//        try {
+//            //加入这句，可以直接把list的数据根据分页规则重新封装
+//            Page page = PageHelper.startPage(pageNum,pageSize,true);
+//
+//            List<Fix> fixList = repairmanService.queryFixList();
+//            //总数据条数
+//            modelMap.put("total", page.getTotal());
+//            //当前页
+//            modelMap.put("nowPage", pageNum);
+//            //数据
+//            modelMap.put("Fix", fixList);
+//            return modelMap;
+//        } catch (Exception e) {
+//            throw new RuntimeException(e.toString());
+//        }
+//    }
+
     /**
      * 根据维修Id查询维修信息
      * @param fixId

@@ -1,6 +1,8 @@
 package com.superfly.cms.web;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.superfly.cms.entity.*;
 import com.superfly.cms.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,6 +148,34 @@ public class ManagerController {
     }
 
     /**
+     * 查询所有的故障定义信息(分页)
+     * @param pageNum  当前页码
+     * @param pageSize  页内大小
+     * @return List<FaultDefinition>
+     */
+    @RequestMapping(value = "/getfaultdefinitionlist_p", method = RequestMethod.GET)
+    private Map<String, Object> getFaultDefinitionList_p(Integer pageNum,Integer pageSize) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        try {
+            //加入这句，可以直接把list的数据根据分页规则重新封装
+            Page page = PageHelper.startPage(pageNum,pageSize,true);
+
+            List<FaultDefinition> faultDefinitionList = managerService.queryFaultDefinitionList();
+            //总数据条数
+            modelMap.put("total", page.getTotal());
+            //当前页
+            modelMap.put("nowPage", pageNum);
+            //数据
+            modelMap.put("FaultDefinition", faultDefinitionList);
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+
+
+    }
+
+    /**
      * 根据故障Id查询故障信息
      *
      * @param faultId
@@ -226,6 +256,31 @@ public class ManagerController {
     }
 
     /**
+     * 查询所有的其它费用信息
+     * @param pageNum  当前页码
+     * @param pageSize  页内大小
+     * @return List<OtherCost>
+     */
+    @RequestMapping(value = "/getothercostlist_p", method = RequestMethod.GET)
+    private Map<String, Object> getcList_p(Integer pageNum,Integer pageSize) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        try {
+            //加入这句，可以直接把list的数据根据分页规则重新封装
+            Page page = PageHelper.startPage(pageNum,pageSize,true);
+
+            List<OtherCost> otherCostList = managerService.queryOtherCostList();
+            //总数据条数
+            modelMap.put("total", page.getTotal());
+            //当前页
+            modelMap.put("nowPage", pageNum);
+            //数据
+            modelMap.put("OtherCost", otherCostList);
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+    /**
      * 根据其它费用Id查询其它费用信息
      *
      * @param otherCostId
@@ -304,6 +359,32 @@ public class ManagerController {
         List<RepairRegulations> repairRegulations = managerService.queryRepairRegulationsList();
         modelMap.put("RepairRegulations", repairRegulations);
         return modelMap;
+    }
+
+    /**
+     * 查询所有的维修规定信息(分页)
+     * @param pageNum  当前页码
+     * @param pageSize  页内大小
+     * @return List<RepairRegulations>
+     */
+    @RequestMapping(value = "/getrepairregulationslist_p", method = RequestMethod.GET)
+    private Map<String, Object> getRepairRegulationsList_p(Integer pageNum,Integer pageSize) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        try {
+            //加入这句，可以直接把list的数据根据分页规则重新封装
+            Page page = PageHelper.startPage(pageNum,pageSize,true);
+
+            List<RepairRegulations> repairRegulations = managerService.queryRepairRegulationsList();
+            //总数据条数
+            modelMap.put("total", page.getTotal());
+            //当前页
+            modelMap.put("nowPage", pageNum);
+            //数据
+            modelMap.put("RepairRegulations", repairRegulations);
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
     }
 
     /**
@@ -389,6 +470,31 @@ public class ManagerController {
         List<RepairTeam> repairTeamList = managerService.queryRepairTeamList();
         modelMap.put("RepairTeam", repairTeamList);
         return modelMap;
+    }
+    /**
+     * 查询所有的维修班组信息(分页)
+     * @param pageNum  当前页码
+     * @param pageSize  页内大小
+     * @return List<RepairTeam>
+     */
+    @RequestMapping(value = "/getrepairteamlist_p", method = RequestMethod.GET)
+    private Map<String, Object> getRepairTeamList_p(Integer pageNum,Integer pageSize) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        try {
+            //加入这句，可以直接把list的数据根据分页规则重新封装
+            Page page = PageHelper.startPage(pageNum,pageSize,true);
+
+            List<RepairTeam> repairTeamList = managerService.queryRepairTeamList();
+            //总数据条数
+            modelMap.put("total", page.getTotal());
+            //当前页
+            modelMap.put("nowPage", pageNum);
+            //数据
+            modelMap.put("RepairTeam", repairTeamList);
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
     }
 
     /**

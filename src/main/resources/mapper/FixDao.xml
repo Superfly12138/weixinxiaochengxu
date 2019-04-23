@@ -8,7 +8,7 @@
        SELECT fix_id, fix_actual_money, fix_order_date, fix_start_date,
        fix_end_date, fix_over, repair_id, car_id,
        repair_team_id, fault_id, other_cost_id
-       FROM fix_t;
+       FROM fix_t
     </select>
 
     <select id="queryFixByFixId" resultType="com.superfly.cms.entity.Fix">

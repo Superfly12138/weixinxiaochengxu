@@ -22,7 +22,7 @@ public class CustomerDaoTest {
     @Test
     public void queryCustomer() {
        List<Customer> list =  customerDao.queryCustomer();
-       assertEquals(12,list.size());
+       assertEquals(10,list.size());
     }
 
     @Test
