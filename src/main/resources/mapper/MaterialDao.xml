@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.MaterialDao">
+
+    <select id="queryMaterial" resultType="com.superfly.cms.entity.Material">
+       select *
+       from material_t
+    </select>
+
+    <select id="queryMaterialById" resultType="com.superfly.cms.entity.Material">
+		SELECT *
+       from material_t
+		WHERE
+		material_id=#{materialId}
+	</select>
+
+    <insert id="insertMaterial" useGeneratedKeys="true" keyProperty="materialId"
+            keyColumn="material_id" parameterType="com.superfly.cms.entity.Material">
+		INSERT INTO
+		material_t(material_name, material_number, material_inmoney, material_outmoney)
+		VALUES
+		(#{materialName},#{materialNumber},#{materialInmoney},#{materialOutmoney})
+	</insert>
+    <update id="updateMaterial" parameterType="com.superfly.cms.entity.Material">
+        update material_t
+        <set>
+            <if test="materialName != null">material_name=#{materialName},</if>
+            <if test="materialNumber != null">material_number=#{materialNumber},</if>
+            <if test="materialInmoney != null">material_inmoney=#{materialInmoney},</if>
+            <if test="materialOutmoney != null">material_outmoney=#{materialOutmoney},</if>
+        </set>
+        where material_id=#{materialId}
+    </update>
+    <delete id="deleteMaterial">
+		DELETE FROM
+		material_t
+		WHERE
+		material_id=#{materialId}
+	</delete>
+</mapper>
