@@ -22,11 +22,50 @@ public class CustomerController {
     private CustomerService customerService;
 
     /**
-     * 根据Id获取一个顾客信息
-     *
-     * @param cusId
+     * 得到用户列表
      * @return
      */
+    @RequestMapping(value = "/getcuslist", method = RequestMethod.GET)
+    private Map<String, Object> getCustomerList() {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Customer> list = customerService.getCustomerList();
+        modelMap.put("Customer", list);
+        return modelMap;
+    }
+
+    /**
+     * 得到用户列表(分页方式)
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/getcuslist_p", method = RequestMethod.GET)
+    private Map<String, Object> getCustomerList_p(Integer pageNum,Integer pageSize) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        try {
+            //加入这句，可以直接把list的数据根据分页规则重新封装
+            Page page = PageHelper.startPage(pageNum, pageSize, true);
+
+            List<Customer> list = customerService.getCustomerList();
+            //总数据条数
+            modelMap.put("total", page.getTotal());
+            //当前页
+            modelMap.put("nowPage", pageNum);
+            //数据
+            modelMap.put("Customer", list);
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+
+        /**
+         * 根据Id获取一个顾客信息
+         *
+         * @param cusId
+         * @return
+         */
     @RequestMapping(value = "/getcusbyid", method = RequestMethod.GET)
     private Map<String, Object> getCustomerById(Integer cusId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -169,6 +208,20 @@ public class CustomerController {
             throw new RuntimeException(e.toString());
         }
 
+    }
+
+
+    /**
+     * 通过汽车Id查询汽车信息
+     * @param carId
+     * @return CarList
+     */
+    @RequestMapping(value = "/getcarbycarid", method = RequestMethod.GET)
+    private Map<String, Object> getCarsByCarId(Integer carId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Car car= customerService.queryCarByCarId(carId);
+        modelMap.put("Car", car);
+        return modelMap;
     }
 
 

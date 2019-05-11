@@ -28,6 +28,20 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private FixDao fixDao;
 
+    /**
+     * 查询所有的顾客信息
+     *
+     * @return
+     */
+    @Override
+    public List<Customer> getCustomerList() {
+        try {
+            return customerDao.queryCustomer();
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
     @Override
     public Customer getCustomerById(Integer cusId) {
         try {
@@ -254,6 +268,22 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+    /**
+     * 通过汽车Id查询汽车
+     *
+     * @param carId
+     * @return
+     */
+    @Override
+    public Car queryCarByCarId(Integer carId) {
+        try {
+           return carDao.queryCarById(carId);
+
+        } catch (Exception e) {
+            throw new RuntimeException("查询失败!" + e.toString());
+        }
+    }
+
     @Transactional
     @Override
     public boolean addCar(Car car, Integer cusId) {
@@ -363,7 +393,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
         try {
             fix.setFixOrderDate(new Date());
-            fix.setFixOver(0);
+            fix.setFixOver(1);
             int effectedNumber = fixDao.insertFix(fix);
             if (effectedNumber > 0) {
                 return true;

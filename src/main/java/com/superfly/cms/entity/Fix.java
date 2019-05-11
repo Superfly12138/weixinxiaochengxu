@@ -4,16 +4,111 @@ import java.util.Date;
 
 public class Fix {
     private Integer fixId;
-    private String fixActualMoney;
+    private Integer cusId;
+    private Integer carId;
+    private Integer faultId;
+    private Integer repairTypeId;
+    private Integer repairTeamId;
+    private Integer repairId;
+    private Integer otherCostId;
+    private Date nextMaintainDate;
     private Date fixOrderDate;
-    private Date fixStartDate;
     private Date fixEndDate;
     private Integer fixOver;
-    private Integer repairId;
-    private Integer carId;
-    private Integer repairTeamId;
-    private Integer faultId;
-    private Integer otherCostId;
+
+    private String cusName;
+    private String cusSex;
+    private String cusPhone;
+    private String cusAddress;
+
+    private String carType;
+    private String carNumber;
+
+    private String faultName;
+
+    private String repairTypeName;
+
+    private String repairName;
+    private String repairMoney;
+
+    private String repairTeamName;
+
+    private String otherCostName;
+    private String fixStatus;
+
+    public String getCusSex() {
+        return cusSex;
+    }
+
+    public void setCusSex(String cusSex) {
+        this.cusSex = cusSex;
+    }
+
+    public String getCusPhone() {
+        return cusPhone;
+    }
+
+    public void setCusPhone(String cusPhone) {
+        this.cusPhone = cusPhone;
+    }
+
+    public String getCusAddress() {
+        return cusAddress;
+    }
+
+    public void setCusAddress(String cusAddress) {
+        this.cusAddress = cusAddress;
+    }
+
+    public String getCarType() {
+        return carType;
+    }
+
+    public void setCarType(String carType) {
+        this.carType = carType;
+    }
+
+    public String getRepairTypeName() {
+        return repairTypeName;
+    }
+
+    public void setRepairTypeName(String repairTypeName) {
+        this.repairTypeName = repairTypeName;
+    }
+
+    public String getRepairName() {
+        return repairName;
+    }
+
+    public void setRepairName(String repairName) {
+        this.repairName = repairName;
+    }
+
+    public String getRepairMoney() {
+        return repairMoney;
+    }
+
+    public void setRepairMoney(String repairMoney) {
+        this.repairMoney = repairMoney;
+    }
+
+    public String getRepairTeamName() {
+        return repairTeamName;
+    }
+
+    public void setRepairTeamName(String repairTeamName) {
+        this.repairTeamName = repairTeamName;
+    }
+
+    public String getOtherCostName() {
+        return otherCostName;
+    }
+
+    public void setOtherCostName(String otherCostName) {
+        this.otherCostName = otherCostName;
+    }
+
+
 
     public Integer getFixId() {
         return fixId;
@@ -23,12 +118,68 @@ public class Fix {
         this.fixId = fixId;
     }
 
-    public String getFixActualMoney() {
-        return fixActualMoney;
+    public Integer getCusId() {
+        return cusId;
     }
 
-    public void setFixActualMoney(String fixActualMoney) {
-        this.fixActualMoney = fixActualMoney;
+    public void setCusId(Integer cusId) {
+        this.cusId = cusId;
+    }
+
+    public Integer getCarId() {
+        return carId;
+    }
+
+    public void setCarId(Integer carId) {
+        this.carId = carId;
+    }
+
+    public Integer getFaultId() {
+        return faultId;
+    }
+
+    public void setFaultId(Integer faultId) {
+        this.faultId = faultId;
+    }
+
+    public Integer getRepairTypeId() {
+        return repairTypeId;
+    }
+
+    public void setRepairTypeId(Integer repairTypeId) {
+        this.repairTypeId = repairTypeId;
+    }
+
+    public Integer getRepairTeamId() {
+        return repairTeamId;
+    }
+
+    public void setRepairTeamId(Integer repairTeamId) {
+        this.repairTeamId = repairTeamId;
+    }
+
+    public Integer getRepairId() {
+        return repairId;
+    }
+
+    public void setRepairId(Integer repairId) {
+        this.repairId = repairId;
+    }
+
+    public Integer getOtherCostId() {
+        return otherCostId;
+    }
+
+    public void setOtherCostId(Integer otherCostId) {
+        this.otherCostId = otherCostId;
+    }
+
+    public Date getNextMaintainDate() {
+        return nextMaintainDate;
+    }
+
+    public void setNextMaintainDate(Date nextMaintainDate) {
+        this.nextMaintainDate = nextMaintainDate;
     }
 
     public Date getFixOrderDate() {
@@ -37,14 +188,6 @@ public class Fix {
 
     public void setFixOrderDate(Date fixOrderDate) {
         this.fixOrderDate = fixOrderDate;
-    }
-
-    public Date getFixStartDate() {
-        return fixStartDate;
-    }
-
-    public void setFixStartDate(Date fixStartDate) {
-        this.fixStartDate = fixStartDate;
     }
 
     public Date getFixEndDate() {
@@ -63,60 +206,53 @@ public class Fix {
         this.fixOver = fixOver;
     }
 
-    public Integer getRepairId() {
-        return repairId;
+    public String getCusName() {
+        return cusName;
     }
 
-    public void setRepairId(Integer repairId) {
-        this.repairId = repairId;
+    public void setCusName(String cusName) {
+        this.cusName = cusName;
     }
 
-    public Integer getCarId() {
-        return carId;
+    public String getCarNumber() {
+        return carNumber;
     }
 
-    public void setCarId(Integer carId) {
-        this.carId = carId;
+    public void setCarNumber(String carNumber) {
+        this.carNumber = carNumber;
     }
 
-    public Integer getRepairTeamId() {
-        return repairTeamId;
+    public String getFaultName() {
+        return faultName;
     }
 
-    public void setRepairTeamId(Integer repairTeamId) {
-        this.repairTeamId = repairTeamId;
+    public void setFaultName(String faultName) {
+        this.faultName = faultName;
     }
 
-    public Integer getFaultId() {
-        return faultId;
+    public String getFixStatus() {
+        return fixStatus;
     }
 
-    public void setFaultId(Integer faultId) {
-        this.faultId = faultId;
-    }
-
-    public Integer getOtherCostId() {
-        return otherCostId;
-    }
-
-    public void setOtherCostId(Integer otherCostId) {
-        this.otherCostId = otherCostId;
+    public void setFixStatus(String fixStatus) {
+        this.fixStatus = fixStatus;
     }
 
     @Override
     public String toString() {
         return "Fix{" +
                 "fixId=" + fixId +
-                ", fixActualMoney='" + fixActualMoney + '\'' +
+                ", cusId=" + cusId +
+                ", carId=" + carId +
+                ", faultId=" + faultId +
+                ", repairTypeId=" + repairTypeId +
+                ", repairTeamId=" + repairTeamId +
+                ", repairId=" + repairId +
+                ", otherCostId=" + otherCostId +
+                ", nextMaintainDate=" + nextMaintainDate +
                 ", fixOrderDate=" + fixOrderDate +
-                ", fixStartDate=" + fixStartDate +
                 ", fixEndDate=" + fixEndDate +
                 ", fixOver=" + fixOver +
-                ", repairId=" + repairId +
-                ", carId=" + carId +
-                ", repairTeamId=" + repairTeamId +
-                ", faultId=" + faultId +
-                ", otherCostId=" + otherCostId +
                 '}';
     }
 }

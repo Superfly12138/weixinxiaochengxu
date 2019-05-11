@@ -295,95 +295,113 @@ public class RepairmanServiceImpl implements RepairmanService {
     }
 
     /**
-     * 通过维修人员所在维修组编号查询维修信息
+     * 确认完工
      *
-     * @param repairTeamId
-     * @return
-     */
-    @Override
-    public List<Fix> queryFixByRepairTeamId(Integer repairTeamId) {
-        try {
-            return fixDao.queryFixByRepairTeamId(repairTeamId);
-        } catch (Exception e) {
-            throw new RuntimeException(e.toString());
-        }
-    }
-
-
-    /**
-     * 接受维修单（要求存在于维修班组,前端传入的数据有，包括fixId在内的所有信息）
-     *
-     * @param fix
+     * @param fix 包括fixId和nextmaintain_time
      * @return
      */
     @Transactional
     @Override
-    public boolean acceptFix(Fix fix) {
+    public boolean confirmFixOver(Fix fix) {
         if (fix == null) {
             throw new RuntimeException("前端传入数据无效，更新信息失败！");
         }
-        if (fix.getRepairTeamId() != null && !"".equals(fix.getRepairTeamId())) {
-            if (fix.getRepairId() != null && !"".equals(fix.getRepairId())) {
-                if (fix.getFixOver() == 0) {
-                    try {
-                        fix.setFixStartDate(new Date());
-                        fix.setFixOver(1);
-                        int effectedNumber = fixDao.updateFix(fix);
-                        if (effectedNumber > 0) {
-                            return true;
-                        } else {
-                            throw new RuntimeException("接受维修单失败！");
-                        }
-                    } catch (Exception e) {
-                        throw new RuntimeException("接受维修单失败！" + e.toString());
-                    }
-                } else {
-                    throw new RuntimeException("不能接受改维修单！");
-                }
-            } else {
-                throw new RuntimeException("维修规定未选择！");
-            }
-        } else {
-            throw new RuntimeException("该维修人员暂未存在于维修班组，请选择维修班组后才能接收维修单！");
-        }
 
-    }
-
-    /**
-     * 完成维修单（前端传入的数据有，包括fixId在内的所有信息）
-     *
-     * @param fix
-     * @return
-     */
-    @Transactional
-    @Override
-    public boolean finishFix(Fix fix) {
-        if (fix == null) {
-            throw new RuntimeException("前端传入数据无效，更新信息失败！");
-        }
-        if (fix.getFixActualMoney() != null && !"".equals(fix.getFixActualMoney())) {
-            if (fix.getOtherCostId() != null && !"".equals(fix.getOtherCostId())) {
-                if (fix.getFixOver() == 1) {
+        if (true) {
                     try {
-                        fix.setFixEndDate(new Date());
                         fix.setFixOver(2);
+                        fix.setFixEndDate(new Date());
+//                        System.out.println(fix);
                         int effectedNumber = fixDao.updateFix(fix);
                         if (effectedNumber > 0) {
                             return true;
                         } else {
-                            throw new RuntimeException("完成维修单失败！");
+                            throw new RuntimeException("确认失败！");
                         }
                     } catch (Exception e) {
-                        throw new RuntimeException("完成维修单失败！" + e.toString());
+                        throw new RuntimeException("确认失败！" + e.toString());
                     }
                 } else {
-                    throw new RuntimeException("完成维修单失败！");
+                    throw new RuntimeException("该维修单不能确认完工！");
                 }
-            } else {
-                throw new RuntimeException("其他费用无效！");
-            }
-        } else {
-            throw new RuntimeException("维修金额无效！");
-        }
     }
+
+
+//
+//    /**
+//     * 接受维修单（要求存在于维修班组,前端传入的数据有，包括fixId在内的所有信息）
+//     *
+//     * @param fix
+//     * @return
+//     */
+//    @Transactional
+//    @Override
+//    public boolean acceptFix(Fix fix) {
+//        if (fix == null) {
+//            throw new RuntimeException("前端传入数据无效，更新信息失败！");
+//        }
+//        if (fix.getRepairTeamId() != null && !"".equals(fix.getRepairTeamId())) {
+//            if (fix.getRepairId() != null && !"".equals(fix.getRepairId())) {
+//                if (fix.getFixOver() == 0) {
+//                    try {
+//                        fix.setFixStartDate(new Date());
+//                        fix.setFixOver(1);
+//                        int effectedNumber = fixDao.updateFix(fix);
+//                        if (effectedNumber > 0) {
+//                            return true;
+//                        } else {
+//                            throw new RuntimeException("接受维修单失败！");
+//                        }
+//                    } catch (Exception e) {
+//                        throw new RuntimeException("接受维修单失败！" + e.toString());
+//                    }
+//                } else {
+//                    throw new RuntimeException("不能接受改维修单！");
+//                }
+//            } else {
+//                throw new RuntimeException("维修规定未选择！");
+//            }
+//        } else {
+//            throw new RuntimeException("该维修人员暂未存在于维修班组，请选择维修班组后才能接收维修单！");
+//        }
+//
+//    }
+//
+//    /**
+//     * 完成维修单（前端传入的数据有，包括fixId在内的所有信息）
+//     *
+//     * @param fix
+//     * @return
+//     */
+//    @Transactional
+//    @Override
+//    public boolean finishFix(Fix fix) {
+//        if (fix == null) {
+//            throw new RuntimeException("前端传入数据无效，更新信息失败！");
+//        }
+//        if (fix.getFixActualMoney() != null && !"".equals(fix.getFixActualMoney())) {
+//            if (fix.getOtherCostId() != null && !"".equals(fix.getOtherCostId())) {
+//                if (fix.getFixOver() == 1) {
+//                    try {
+//                        fix.setFixEndDate(new Date());
+//                        fix.setFixOver(2);
+//                        int effectedNumber = fixDao.updateFix(fix);
+//                        if (effectedNumber > 0) {
+//                            return true;
+//                        } else {
+//                            throw new RuntimeException("完成维修单失败！");
+//                        }
+//                    } catch (Exception e) {
+//                        throw new RuntimeException("完成维修单失败！" + e.toString());
+//                    }
+//                } else {
+//                    throw new RuntimeException("完成维修单失败！");
+//                }
+//            } else {
+//                throw new RuntimeException("其他费用无效！");
+//            }
+//        } else {
+//            throw new RuntimeException("维修金额无效！");
+//        }
+//    }
 }

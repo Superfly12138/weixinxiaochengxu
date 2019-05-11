@@ -81,24 +81,10 @@ public interface RepairmanService {
     Fix queryFixByFixId(Integer fixId);
 
     /**
-     * 通过维修人员所在维修组编号查询维修信息
-     * @param repairTeamId
+     * 确认完工
+     * @param fix 包括fixId和nextmaintain_time
      * @return
      */
-    List<Fix> queryFixByRepairTeamId(Integer repairTeamId);
+    boolean confirmFixOver(Fix fix);
 
-
-    /**
-     * 接受维修单（要求存在于维修班组,前端传入的数据有，包括fixId在内的所有信息）
-     * @param fix
-     * @return
-     */
-    boolean acceptFix(Fix fix);
-
-    /**
-     * 完成维修单 前端传入的数据有，包括fixId在内的所有信息）
-     * @param fix
-     * @return
-     */
-    boolean finishFix(Fix fix);
 }

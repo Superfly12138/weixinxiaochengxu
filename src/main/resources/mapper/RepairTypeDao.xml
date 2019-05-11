@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.RepairTypeDao">
+
+    <select id="queryRepairType" resultType="com.superfly.cms.entity.RepairType">
+       select *
+       from repair_type_t
+    </select>
+
+    <select id="queryRepairTypeById" resultType="com.superfly.cms.entity.RepairType">
+       select *
+       from repair_type_t
+       WHERE
+		repair_type_id=#{repairTypeId}
+    </select>
+
+</mapper>

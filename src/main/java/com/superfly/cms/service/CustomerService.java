@@ -8,6 +8,11 @@ import java.util.List;
 
 public interface CustomerService {
     /**
+     * 查询所有的顾客信息
+     * @return
+     */
+    List<Customer> getCustomerList();
+    /**
      * 根据客户Id获取客户信息
      *
      * @param cusId
@@ -72,6 +77,13 @@ public interface CustomerService {
      * @return List<Car>
      */
     List<Car> queryCarList(Integer cusId);
+
+    /**
+     * 通过汽车Id查询汽车
+     * @param carId
+     * @return
+     */
+    Car queryCarByCarId(Integer carId);
 
     /**
      * 添加汽车信息

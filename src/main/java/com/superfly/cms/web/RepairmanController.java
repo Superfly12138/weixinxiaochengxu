@@ -3,9 +3,10 @@ package com.superfly.cms.web;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.superfly.cms.entity.Car;
-import com.superfly.cms.entity.Fix;
-import com.superfly.cms.entity.Repairman;
+import com.superfly.cms.entity.*;
+import com.superfly.cms.service.AdminService;
+import com.superfly.cms.service.CustomerService;
+import com.superfly.cms.service.ManagerService;
 import com.superfly.cms.service.RepairmanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +23,13 @@ import java.util.Map;
 @RequestMapping(value = "/repairman")
 public class RepairmanController {
     @Autowired
+    private CustomerService customerService;
+    @Autowired
+    private AdminService adminService;
+    @Autowired
     private RepairmanService repairmanService;
+    @Autowired
+    private ManagerService managerService;
     
     /**
      * 根据Id获取一个维修人员信息
@@ -200,41 +207,44 @@ public class RepairmanController {
     private Map<String, Object> getFixById(Integer fixId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         Fix fix = repairmanService.queryFixByFixId(fixId);
+
+        Customer customer = customerService.getCustomerById(fix.getCusId());
+        Car car = customerService.queryCarByCarId(fix.getCarId());
+        FaultDefinition faultDefinition = managerService.queryFaultDefinition(fix.getFaultId());
+        RepairType repairType = adminService.getRepairTypeById(fix.getRepairTypeId());
+        RepairRegulations repairRegulations = managerService.queryRepairRegulations(fix.getRepairId());
+        RepairTeam repairTeam = managerService.queryRepairTeam(fix.getRepairTeamId());
+        OtherCost otherCost = managerService.queryOtherCost(fix.getOtherCostId());
+
+        fix.setCusName(customer.getCusName());
+        fix.setCusSex(customer.getCusSex());
+        fix.setCusPhone(customer.getCusPhone());
+        fix.setCusAddress(customer.getCusAddress());
+
+        fix.setCarType(car.getCarType());
+        fix.setCarNumber(car.getCarNumber());
+
+        fix.setFaultName(faultDefinition.getFaultName());
+
+        fix.setRepairTypeName(repairType.getRepairTypeName());
+
+        fix.setRepairName(repairRegulations.getRepairName());
+        fix.setRepairMoney(repairRegulations.getRepairMoney());
+
+        fix.setRepairTeamName(repairTeam.getRepairTeamName());
+
+        fix.setOtherCostName(otherCost.getOtherCostName());
+        if(fix.getFixOver()==1){
+            fix.setFixStatus("未完工");
+        }
+        if(fix.getFixOver()==2){
+            fix.setFixStatus("已完工");
+        }
         modelMap.put("Fix", fix);
         return modelMap;
     }
-    /**
-     * 通过维修人员所在维修组编号查询维修信息
-     * @param repairTeamId
-     * @return
-     */
-    @RequestMapping(value = "/getfixbyrepairteamid", method = RequestMethod.GET)
-    private Map<String, Object> getFixByRepairTeamId(Integer repairTeamId) {
-        Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<Fix> fixList= repairmanService.queryFixByRepairTeamId(repairTeamId);
-        modelMap.put("Fix", fixList);
-        return modelMap;
-    }
-    /**
-     * 接受维修单（要求存在于维修班组,前端传入的数据有，包括fixId在内的所有信息）
-     * @param jsonString
-     * @return
-     */
-    @RequestMapping(value = "/acceptfix", method = RequestMethod.POST)
-    private Map<String, Object> acceptFix(@RequestBody String jsonString) {
-        try {
-            //将接收到的json转换成Map
-            Map map = (Map) JSON.parse(jsonString);
-            Fix fix = JSON.toJavaObject((JSON) map.get("Fix"), com.superfly.cms.entity.Fix.class);
-            Map<String, Object> modelMap = new HashMap<String, Object>();
-            modelMap.put("success", repairmanService.acceptFix(fix));
-            return modelMap;
-        } catch (Exception e) {
-            throw new RuntimeException(e.toString());
-        }
-    }
 
-    /**
+        /**
      * 完成维修单 前端传入的数据有，包括fixId在内的所有信息）
      * @param jsonString
      * @return
@@ -246,10 +256,60 @@ public class RepairmanController {
             Map map = (Map) JSON.parse(jsonString);
             Fix fix = JSON.toJavaObject((JSON) map.get("Fix"), com.superfly.cms.entity.Fix.class);
             Map<String, Object> modelMap = new HashMap<String, Object>();
-            modelMap.put("success", repairmanService.finishFix(fix));
+            modelMap.put("success", repairmanService.confirmFixOver(fix));
             return modelMap;
         } catch (Exception e) {
             throw new RuntimeException(e.toString());
         }
     }
+
+//    /**
+//     * 通过维修人员所在维修组编号查询维修信息
+//     * @param repairTeamId
+//     * @return
+//     */
+//    @RequestMapping(value = "/getfixbyrepairteamid", method = RequestMethod.GET)
+//    private Map<String, Object> getFixByRepairTeamId(Integer repairTeamId) {
+//        Map<String, Object> modelMap = new HashMap<String, Object>();
+//        List<Fix> fixList= repairmanService.queryFixByRepairTeamId(repairTeamId);
+//        modelMap.put("Fix", fixList);
+//        return modelMap;
+//    }
+//    /**
+//     * 接受维修单（要求存在于维修班组,前端传入的数据有，包括fixId在内的所有信息）
+//     * @param jsonString
+//     * @return
+//     */
+//    @RequestMapping(value = "/acceptfix", method = RequestMethod.POST)
+//    private Map<String, Object> acceptFix(@RequestBody String jsonString) {
+//        try {
+//            //将接收到的json转换成Map
+//            Map map = (Map) JSON.parse(jsonString);
+//            Fix fix = JSON.toJavaObject((JSON) map.get("Fix"), com.superfly.cms.entity.Fix.class);
+//            Map<String, Object> modelMap = new HashMap<String, Object>();
+//            modelMap.put("success", repairmanService.acceptFix(fix));
+//            return modelMap;
+//        } catch (Exception e) {
+//            throw new RuntimeException(e.toString());
+//        }
+//    }
+//
+//    /**
+//     * 完成维修单 前端传入的数据有，包括fixId在内的所有信息）
+//     * @param jsonString
+//     * @return
+//     */
+//    @RequestMapping(value = "/finishfix", method = RequestMethod.POST)
+//    private Map<String, Object> finishFix(@RequestBody String jsonString) {
+//        try {
+//            //将接收到的json转换成Map
+//            Map map = (Map) JSON.parse(jsonString);
+//            Fix fix = JSON.toJavaObject((JSON) map.get("Fix"), com.superfly.cms.entity.Fix.class);
+//            Map<String, Object> modelMap = new HashMap<String, Object>();
+//            modelMap.put("success", repairmanService.finishFix(fix));
+//            return modelMap;
+//        } catch (Exception e) {
+//            throw new RuntimeException(e.toString());
+//        }
+//    }
 }
