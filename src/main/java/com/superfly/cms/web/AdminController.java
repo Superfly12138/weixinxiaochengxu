@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 @RestController
@@ -140,7 +141,7 @@ public class AdminController {
 
 
     /**
-     * 查询所有的材料定义信息
+     * 查询所有的材料信息
      *
      * @return List<Material>
      */
@@ -148,6 +149,28 @@ public class AdminController {
     private Map<String, Object> getMaterialList() {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<Material> materialList = adminService.queryMaterialList();
+        modelMap.put("Material", materialList);
+        return modelMap;
+    }
+
+
+    /**
+     * 查询所有的材料下限信息
+     *
+     * @return List<Material>
+     */
+    @RequestMapping(value = "/getmateriallist2", method = RequestMethod.GET)
+    private Map<String, Object> getMaterialList2() {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Material> materialList = adminService.queryMaterialList();
+        ListIterator<Material> listIterator = materialList.listIterator();
+
+        while(listIterator.hasNext()){
+            if(listIterator.next().getMaterialNumber()>10) {
+                    listIterator.remove();
+            }
+        }
+
         modelMap.put("Material", materialList);
         return modelMap;
     }
@@ -249,6 +272,209 @@ public class AdminController {
 
 
 
+
+
+    /**
+     * 查询所有的入库单信息
+     *
+     * @return List<Instock>
+     */
+    @RequestMapping(value = "/getinstocklist", method = RequestMethod.GET)
+    private Map<String, Object> getInstockList() {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Instock> instockList = adminService.queryInstockList();
+        modelMap.put("Instock", instockList);
+        return modelMap;
+    }
+
+
+    /**
+     * 查询所有的当天入库单信息
+     *
+     * @return List<Instock>
+     */
+    @RequestMapping(value = "/getinstocklisttoday", method = RequestMethod.GET)
+    private Map<String, Object> getInstockListToday() {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Instock> instockList = adminService.queryInstockListToday();
+        for (Instock item:instockList
+        ) {
+           Material material = adminService.queryMaterialByMaterialId(item.getMaterialId());
+           item.setMaterialName(material.getMaterialName());
+           item.setInMoney(material.getMaterialInmoney());
+           item.setOutMoney(material.getMaterialOutmoney());
+        }
+        modelMap.put("InstockToday", instockList);
+        return modelMap;
+    }
+
+    /**
+     * 根据入库单Id查询入库单信息
+     *
+     * @param instockId
+     * @return Instock
+     */
+    @RequestMapping(value = "/getinstockbyid", method = RequestMethod.GET)
+    private Map<String, Object> getInstockById(Integer instockId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Instock instock = adminService.queryInstockByInstockId(instockId);
+        modelMap.put("Instock", instock);
+        return modelMap;
+    }
+
+    /**
+     * 新建入库单
+     *
+     * @param jsonString
+     * @return true or false
+     */
+    @RequestMapping(value = "/addinstock", method = RequestMethod.POST)
+    private Map<String, Object> addInstock(@RequestBody String jsonString) {
+        try {
+            //将接收到的json转换成Map
+            Map map = (Map) JSON.parse(jsonString);
+            Instock instock = JSON.toJavaObject((JSON) map.get("Instock"), com.superfly.cms.entity.Instock.class);
+            Map<String, Object> modelMap = new HashMap<String, Object>();
+            modelMap.put("success", adminService.addInstock(instock));
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    /**
+     * 更改入库单的信息
+     *
+     * @param jsonString
+     * @return true or false
+     */
+    @RequestMapping(value = "/modifyinstock", method = RequestMethod.POST)
+    private Map<String, Object> modifyInstock(@RequestBody String jsonString) {
+        try {
+            //将接收到的json转换成Map
+            Map map = (Map) JSON.parse(jsonString);
+            Instock instock = JSON.toJavaObject((JSON) map.get("Instock"), com.superfly.cms.entity.Instock.class);
+            Map<String, Object> modelMap = new HashMap<String, Object>();
+            modelMap.put("success", adminService.modifyInstock(instock));
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    /**
+     * 根据入库单Id删除入库单信息
+     *
+     * @param instockId
+     * @return true or false
+     */
+    @RequestMapping(value = "/removeinstock", method = RequestMethod.GET)
+    private Map<String, Object> removeInstock(Integer instockId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        modelMap.put("success", adminService.deleteInstock(instockId));
+        return modelMap;
+    }
+
+    /**
+     * 查询所有的出库单信息
+     *
+     * @return List<Outstock>
+     */
+    @RequestMapping(value = "/getoutstocklist", method = RequestMethod.GET)
+    private Map<String, Object> getOutstockList() {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Outstock> outstockList = adminService.queryOutstockList();
+        modelMap.put("Outstock", outstockList);
+        return modelMap;
+    }
+
+
+    /**
+     * 查询所有的当天出库单信息
+     *
+     * @return List<Instock>
+     */
+    @RequestMapping(value = "/getoutstocklisttoday", method = RequestMethod.GET)
+    private Map<String, Object> getOutstockListToday() {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Outstock> outstockList = adminService.queryOutstockListToday();
+        for (Outstock item:outstockList
+        ) {
+            Material material = adminService.queryMaterialByMaterialId(item.getMaterialId());
+            item.setMaterialName(material.getMaterialName());
+            item.setInMoney(material.getMaterialInmoney());
+            item.setOutMoney(material.getMaterialOutmoney());
+        }
+        modelMap.put("OutstockToday", outstockList);
+        return modelMap;
+    }
+
+    /**
+     * 根据出库单Id查询出库单信息
+     *
+     * @param outstockId
+     * @return Outstock
+     */
+    @RequestMapping(value = "/getoutstockbyid", method = RequestMethod.GET)
+    private Map<String, Object> getOutstockById(Integer outstockId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Outstock outstock = adminService.queryOutstockByOutstockId(outstockId);
+        modelMap.put("Outstock", outstock);
+        return modelMap;
+    }
+
+    /**
+     * 新建出库单
+     *
+     * @param jsonString
+     * @return true or false
+     */
+    @RequestMapping(value = "/addoutstock", method = RequestMethod.POST)
+    private Map<String, Object> addOutstock(@RequestBody String jsonString) {
+        try {
+            //将接收到的json转换成Map
+            Map map = (Map) JSON.parse(jsonString);
+            Outstock outstock = JSON.toJavaObject((JSON) map.get("Outstock"), com.superfly.cms.entity.Outstock.class);
+            Map<String, Object> modelMap = new HashMap<String, Object>();
+            modelMap.put("success", adminService.addOutstock(outstock));
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    /**
+     * 更改出库单的信息
+     *
+     * @param jsonString
+     * @return true or false
+     */
+    @RequestMapping(value = "/modifyoutstock", method = RequestMethod.POST)
+    private Map<String, Object> modifyOutstock(@RequestBody String jsonString) {
+        try {
+            //将接收到的json转换成Map
+            Map map = (Map) JSON.parse(jsonString);
+            Outstock outstock = JSON.toJavaObject((JSON) map.get("Outstock"), com.superfly.cms.entity.Outstock.class);
+            Map<String, Object> modelMap = new HashMap<String, Object>();
+            modelMap.put("success", adminService.modifyOutstock(outstock));
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    /**
+     * 根据出库单Id删除出库单信息
+     *
+     * @param outstockId
+     * @return true or false
+     */
+    @RequestMapping(value = "/removeoutstock", method = RequestMethod.GET)
+    private Map<String, Object> removeOutstock(Integer outstockId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        modelMap.put("success", adminService.deleteOutstock(outstockId));
+        return modelMap;
+    }
 
 
 }

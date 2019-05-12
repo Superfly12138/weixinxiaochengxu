@@ -46,4 +46,15 @@ public class Material {
     public void setMaterialOutmoney(String materialOutmoney) {
         this.materialOutmoney = materialOutmoney;
     }
+
+    @Override
+    public String toString() {
+        return "Material{" +
+                "materialId=" + materialId +
+                ", materialName='" + materialName + '\'' +
+                ", materialNumber=" + materialNumber +
+                ", materialInmoney='" + materialInmoney + '\'' +
+                ", materialOutmoney='" + materialOutmoney + '\'' +
+                '}';
+    }
 }

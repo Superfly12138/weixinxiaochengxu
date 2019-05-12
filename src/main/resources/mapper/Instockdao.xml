@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.InstockDao">
+
+    <select id="queryInstock" resultType="com.superfly.cms.entity.Instock">
+       select *
+       from instock_t
+    </select>
+
+    <select id="queryInstockToday" resultType="com.superfly.cms.entity.Instock">
+       SELECT material_id, sum(instock_number) summerinstock
+        FROM cms.instock_t
+        where instock_time between #{date1} and #{date2}
+        group by material_id;
+
+    </select>
+
+    <select id="queryInstockById" resultType="com.superfly.cms.entity.Instock">
+		SELECT *
+       from instock_t
+		WHERE
+		instock_id=#{instockId}
+	</select>
+
+    <insert id="insertInstock" useGeneratedKeys="true" keyProperty="instockId"
+            keyColumn="instock_id" parameterType="com.superfly.cms.entity.Instock">
+		INSERT INTO
+		instock_t(material_id, instock_number, instock_time)
+		VALUES
+		(#{materialId},#{instockNumber},#{instockTime})
+	</insert>
+    <update id="updateInstock" parameterType="com.superfly.cms.entity.Instock">
+        update instock_t
+        <set>
+            <if test="materialId != null">material_id=#{materialId},</if>
+            <if test="instockNumber != null">instock_number=#{instockNumber},</if>
+            <if test="instockTime != null">instock_time=#{instockTime}</if>
+        </set>
+        where instock_id=#{instockId}
+    </update>
+    <delete id="deleteInstock">
+		DELETE FROM
+		instock_t
+		WHERE
+		instock_id=#{instockId}
+	</delete>
+</mapper>

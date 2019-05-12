@@ -1,6 +1,8 @@
 package com.superfly.cms.service;
 
+import com.superfly.cms.entity.Instock;
 import com.superfly.cms.entity.Material;
+import com.superfly.cms.entity.Outstock;
 import com.superfly.cms.entity.RepairType;
 
 import java.util.List;
@@ -26,7 +28,6 @@ public interface AdminService {
      * @return
      */
     RepairType getRepairTypeById(Integer repairTypeId);
-
 
 
     /**
@@ -67,5 +68,103 @@ public interface AdminService {
      * @return success:true else:false
      */
     boolean deleteMaterial(Integer materialId);
+
+
+
+    /**
+     * 查询所有入库单
+     *
+     * @return List<Instock>
+     */
+    List<Instock> queryInstockList();
+
+    /**
+     * 查询当天统计入库单
+     *
+     * @return List<Instock>
+     */
+    List<Instock> queryInstockListToday();
+
+    /**
+     * 通过入库单Id查询入库单
+     * @param instockId
+     * @return
+     */
+    Instock queryInstockByInstockId(Integer instockId);
+
+    /**
+     * 添加入库单信息
+     *
+     * @param instock
+     *
+     * @return success:true else:false
+     */
+    boolean addInstock(Instock instock);
+
+    /**
+     * 修改入库单信息
+     *
+     * @param instock 传入的入库单信息包括入库单编号
+     * @return success:true else:false
+     */
+    boolean modifyInstock(Instock instock);
+
+    /**
+     * 删除入库单信息
+     *
+     * @param instockId
+     * @return success:true else:false
+     */
+    boolean deleteInstock(Integer instockId);
+
+
+
+
+    /**
+     * 查询所有出库单
+     *
+     * @return List<Outstock>
+     */
+    List<Outstock> queryOutstockList();
+
+    /**
+     * 查询当天统计出库单
+     *
+     * @return List<Instock>
+     */
+    List<Outstock> queryOutstockListToday();
+
+    /**
+     * 通过出库单Id查询出库单
+     * @param outstockId
+     * @return
+     */
+    Outstock queryOutstockByOutstockId(Integer outstockId);
+
+    /**
+     * 添加出库单信息
+     *
+     * @param outstock
+     *
+     * @return success:true else:false
+     */
+    boolean addOutstock(Outstock outstock);
+
+    /**
+     * 修改出库单信息
+     *
+     * @param outstock 传入的出库单信息包括出库单编号
+     * @return success:true else:false
+     */
+    boolean modifyOutstock(Outstock outstock);
+
+    /**
+     * 删除出库单信息
+     *
+     * @param outstockId
+     * @return success:true else:false
+     */
+    boolean deleteOutstock(Integer outstockId);
+
 
 }

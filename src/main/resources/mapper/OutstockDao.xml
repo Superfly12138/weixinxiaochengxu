@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.OutstockDao">
+
+    <select id="queryOutstock" resultType="com.superfly.cms.entity.Outstock">
+       select *
+       from outstock_t
+    </select>
+
+    <select id="queryOutstockToday" resultType="com.superfly.cms.entity.Outstock">
+       SELECT material_id, sum(outstock_number) summeroutstock
+        FROM cms.outstock_t
+        where outstock_time between #{date1} and #{date2}
+        group by material_id;
+
+    </select>
+
+    <select id="queryOutstockById" resultType="com.superfly.cms.entity.Outstock">
+		SELECT *
+       from outstock_t
+		WHERE
+		outstock_id=#{outstockId}
+	</select>
+
+    <insert id="insertOutstock" useGeneratedKeys="true" keyProperty="outstockId"
+            keyColumn="outstock_id" parameterType="com.superfly.cms.entity.Outstock">
+		INSERT INTO
+		outstock_t(material_id, outstock_number, outstock_time)
+		VALUES
+		(#{materialId},#{outstockNumber},#{outstockTime})
+	</insert>
+    <update id="updateOutstock" parameterType="com.superfly.cms.entity.Outstock">
+        update outstock_t
+        <set>
+            <if test="materialId != null">material_id=#{materialId},</if>
+            <if test="outstockNumber != null">outstock_number=#{outstockNumber},</if>
+            <if test="outstockTime != null">outstock_time=#{outstockTime}</if>
+        </set>
+        where outstock_id=#{outstockId}
+    </update>
+    <delete id="deleteOutstock">
+		DELETE FROM
+		outstock_t
+		WHERE
+		outstock_id=#{outstockId}
+	</delete>
+</mapper>
