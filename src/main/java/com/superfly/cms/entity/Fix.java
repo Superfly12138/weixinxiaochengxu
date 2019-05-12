@@ -34,10 +34,20 @@ public class Fix {
     private String repairTeamName;
 
     private String otherCostName;
+    private String otherCostMoney;
+
     private String fixStatus;
 
     public String getCusSex() {
         return cusSex;
+    }
+
+    public String getOtherCostMoney() {
+        return otherCostMoney;
+    }
+
+    public void setOtherCostMoney(String otherCostMoney) {
+        this.otherCostMoney = otherCostMoney;
     }
 
     public void setCusSex(String cusSex) {
@@ -253,6 +263,20 @@ public class Fix {
                 ", fixOrderDate=" + fixOrderDate +
                 ", fixEndDate=" + fixEndDate +
                 ", fixOver=" + fixOver +
+                ", cusName='" + cusName + '\'' +
+                ", cusSex='" + cusSex + '\'' +
+                ", cusPhone='" + cusPhone + '\'' +
+                ", cusAddress='" + cusAddress + '\'' +
+                ", carType='" + carType + '\'' +
+                ", carNumber='" + carNumber + '\'' +
+                ", faultName='" + faultName + '\'' +
+                ", repairTypeName='" + repairTypeName + '\'' +
+                ", repairName='" + repairName + '\'' +
+                ", repairMoney='" + repairMoney + '\'' +
+                ", repairTeamName='" + repairTeamName + '\'' +
+                ", otherCostName='" + otherCostName + '\'' +
+                ", otherCostMoney='" + otherCostMoney + '\'' +
+                ", fixStatus='" + fixStatus + '\'' +
                 '}';
     }
 }

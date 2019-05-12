@@ -234,6 +234,7 @@ public class RepairmanController {
         fix.setRepairTeamName(repairTeam.getRepairTeamName());
 
         fix.setOtherCostName(otherCost.getOtherCostName());
+        fix.setOtherCostMoney(otherCost.getOtherCostMoney());
         if(fix.getFixOver()==1){
             fix.setFixStatus("未完工");
         }

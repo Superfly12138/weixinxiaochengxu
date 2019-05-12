@@ -116,4 +116,11 @@ public interface CustomerService {
      */
     boolean addFix(Fix fix);
 
+    /**
+     * 新建维修单信息
+     * @param fix
+     * @return true or false
+     */
+    boolean addNewFix(Fix fix);
+
 }

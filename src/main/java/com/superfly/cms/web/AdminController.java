@@ -123,7 +123,7 @@ public class AdminController {
             item.setRepairTeamName(repairTeam.getRepairTeamName());
 
             item.setOtherCostName(otherCost.getOtherCostName());
-
+            item.setOtherCostMoney(otherCost.getOtherCostMoney());
             if(item.getFixOver()==1){
                 item.setFixStatus("未完工");
             }

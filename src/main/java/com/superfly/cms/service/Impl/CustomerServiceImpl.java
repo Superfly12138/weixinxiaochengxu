@@ -404,4 +404,29 @@ public class CustomerServiceImpl implements CustomerService {
             throw new RuntimeException("更新失败！" + e.toString());
         }
     }
+
+    /**
+     * 新建维修单信息
+     *
+     * @param fix
+     * @return true or false
+     */
+    @Override
+    public boolean addNewFix(Fix fix) {
+        if (fix == null) {
+            throw new RuntimeException("前端传入数据无效，新建维修单失败！");
+        }
+        try {
+            fix.setFixOrderDate(new Date());
+            fix.setFixOver(1);
+            int effectedNumber = fixDao.insertFix(fix);
+            if (effectedNumber > 0) {
+                return true;
+            } else {
+                throw new RuntimeException("更新失败！");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("更新失败！" + e.toString());
+        }
+    }
 }

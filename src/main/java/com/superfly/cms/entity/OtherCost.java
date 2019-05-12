@@ -3,6 +3,7 @@ package com.superfly.cms.entity;
 public class OtherCost {
     private Integer otherCostId;
     private String otherCostName;
+    private String otherCostMoney;
     private String otherCostInstruction;
 
     public Integer getOtherCostId() {
@@ -29,11 +30,20 @@ public class OtherCost {
         this.otherCostInstruction = otherCostInstruction;
     }
 
+    public String getOtherCostMoney() {
+        return otherCostMoney;
+    }
+
+    public void setOtherCostMoney(String otherCostMoney) {
+        this.otherCostMoney = otherCostMoney;
+    }
+
     @Override
     public String toString() {
         return "OtherCost{" +
                 "otherCostId=" + otherCostId +
                 ", otherCostName='" + otherCostName + '\'' +
+                ", otherCostMoney='" + otherCostMoney + '\'' +
                 ", otherCostInstruction='" + otherCostInstruction + '\'' +
                 '}';
     }

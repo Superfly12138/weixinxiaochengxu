@@ -5,12 +5,12 @@
 <mapper namespace="com.superfly.cms.dao.OtherCostDao">
 
     <select id="queryOtherCost" resultType="com.superfly.cms.entity.OtherCost">
-       select other_cost_id,other_cost_name,other_cost_instruction
+       select *
        from other_cost_t
     </select>
 
     <select id="queryOtherCostById" resultType="com.superfly.cms.entity.OtherCost">
-		SELECT other_cost_id,other_cost_name,other_cost_instruction
+		SELECT *
        from other_cost_t
 		WHERE
 		other_cost_id=#{otherCostId}
@@ -19,14 +19,15 @@
     <insert id="insertOtherCost" useGeneratedKeys="true" keyProperty="otherCostId"
             keyColumn="other_cost_id" parameterType="com.superfly.cms.entity.OtherCost">
 		INSERT INTO
-		other_cost_t(other_cost_name,other_cost_instruction)
+		other_cost_t(other_cost_name,other_cost_money,other_cost_instruction)
 		VALUES
-		(#{otherCostName},#{otherCostInstruction})
+		(#{otherCostName},#{otherCostMoney},#{otherCostInstruction})
 	</insert>
     <update id="updateOtherCost" parameterType="com.superfly.cms.entity.OtherCost">
         update other_cost_t
         <set>
             <if test="otherCostName != null">other_cost_name=#{otherCostName},</if>
+            <if test="otherCostMoney != null">other_cost_money=#{otherCostMoney},</if>
             other_cost_instruction=#{otherCostInstruction}
         </set>
         where other_cost_id=#{otherCostId}
