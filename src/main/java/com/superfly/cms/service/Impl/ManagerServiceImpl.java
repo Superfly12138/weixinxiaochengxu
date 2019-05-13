@@ -19,6 +19,8 @@ public class ManagerServiceImpl implements ManagerService {
     @Autowired
     private OtherCostDao otherCostDao;
     @Autowired
+    private OtherMaintainDao otherMaintainDao;
+    @Autowired
     private RepairRegulationsDao repairRegulationsDao;
     @Autowired
     private RepairTeamDao repairTeamDao;
@@ -490,6 +492,112 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     /**
+     * 查询所有的保养信息
+     *
+     * @return List<OtherMaintain>
+     */
+    @Override
+    public List<OtherMaintain> queryOtherMaintainList() {
+        try {
+            return otherMaintainDao.queryOtherMaintain();
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    /**
+     * 根据保养Id查询保养信息
+     *
+     * @param otherMaintainId
+     * @return OtherMaintain
+     */
+    @Override
+    public OtherMaintain queryOtherMaintain(Integer otherMaintainId) {
+        try {
+            return otherMaintainDao.queryOtherMaintainById(otherMaintainId);
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    /**
+     * 添加保养信息
+     *
+     * @param otherMaintain
+     * @return true or false
+     */
+    @Transactional
+    @Override
+    public boolean addOtherMaintain(OtherMaintain otherMaintain) {
+        if (otherMaintain == null) {
+            throw new RuntimeException("前端传入数据无效，添加信息失败！");
+        }
+        if (otherMaintain.getOtherMaintainName() != null && !"".equals(otherMaintain.getOtherMaintainName())) {
+            try {
+                int effectedNumber = otherMaintainDao.insertOtherMaintain(otherMaintain);
+                if (effectedNumber > 0) {
+                    return true;
+                } else {
+                    throw new RuntimeException("添加保养信息失败！");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("添加保养信息失败！" + e.toString());
+            }
+        } else {
+            throw new RuntimeException("名称不能为空！");
+        }
+    }
+
+    /**
+     * 更改保养的信息
+     *
+     * @param otherMaintain
+     * @return true or false
+     */
+    @Transactional
+    @Override
+    public boolean modifyOtherMaintain(OtherMaintain otherMaintain) {
+        if (otherMaintain == null) {
+            throw new RuntimeException("前端传入数据无效，更新保养信息失败！");
+        }
+        if (otherMaintain.getOtherMaintainName() != null && !"".equals(otherMaintain.getOtherMaintainName())) {
+            try {
+                int effectedNumber = otherMaintainDao.updateOtherMaintain(otherMaintain);
+                if (effectedNumber > 0) {
+                    return true;
+                } else {
+                    throw new RuntimeException("更新保养信息失败！");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("更新保养信息失败！" + e.toString());
+            }
+        } else {
+            throw new RuntimeException("名称不能为空！");
+        }
+    }
+
+    /**
+     * 根据保养Id删除保养信息
+     *
+     * @param otherMaintainId
+     * @return true or false
+     */
+    @Transactional
+    @Override
+    public boolean deleteOtherMaintain(Integer otherMaintainId) {
+        try {
+            int effectedNum = otherMaintainDao.deleteOtherMaintain(otherMaintainId);
+            if (effectedNum > 0) {
+                return true;
+            } else {
+                throw new RuntimeException("删除保养信息失败!");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("删除保养信息失败:" + e.toString());
+        }
+    }
+
+    /**
      * 查询所有的维修规定信息
      *
      * @return List<RepairRegulations>
@@ -722,4 +830,11 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
 
+    public OtherCostDao getOtherCostDao() {
+        return otherCostDao;
+    }
+
+    public void setOtherCostDao(OtherCostDao otherCostDao) {
+        this.otherCostDao = otherCostDao;
+    }
 }

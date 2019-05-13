@@ -21,11 +21,11 @@
             keyColumn="fix_id" parameterType="com.superfly.cms.entity.Fix">
 		INSERT INTO
 		fix_t( cus_id, car_id, fault_id, repair_type_id, repair_team_id,
-         other_cost_id, next_maintain_date,
+         other_cost_id, other_maintain_id,next_maintain_date,
         fix_order_date, fix_end_date, fix_over)
 		VALUES
 		(#{cusId},#{carId},#{faultId},#{repairTypeId},#{repairTeamId},
-		#{otherCostId},#{nextMaintainDate},
+		#{otherCostId},#{otherMaintainId},#{nextMaintainDate},
 		#{fixOrderDate},#{fixEndDate},#{fixOver})
 	</insert>
     <update id="updateFix" parameterType="com.superfly.cms.entity.Fix">
@@ -37,6 +37,7 @@
             <if test="repairTypeId != null">repair_type_id=#{repairTypeId},</if>
             <if test="repairTeamId != null">repair_team_id=#{repairTeamId},</if>
             <if test="otherCostId != null">other_cost_id=#{otherCostId},</if>
+            <if test="otherMaintainId != null">other_maintain_id=#{otherMaintainId},</if>
             <if test="fixOrderDate != null">fix_order_date=#{fixOrderDate},</if>
             <if test="fixOver != null">fix_over=#{fixOver},</if>
             next_maintain_date=#{nextMaintainDate},

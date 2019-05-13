@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.OtherMaintainDao">
+
+    <select id="queryOtherMaintain" resultType="com.superfly.cms.entity.OtherMaintain">
+       select *
+       from other_maintain_t
+    </select>
+
+    <select id="queryOtherMaintainById" resultType="com.superfly.cms.entity.OtherMaintain">
+		SELECT *
+       from other_maintain_t
+		WHERE
+		other_maintain_id=#{otherMaintainId}
+	</select>
+
+    <insert id="insertOtherMaintain" useGeneratedKeys="true" keyProperty="otherMaintainId"
+            keyColumn="other_maintain_id" parameterType="com.superfly.cms.entity.OtherMaintain">
+		INSERT INTO
+		other_maintain_t(other_maintain_name,other_maintain_money,other_maintain_instruction)
+		VALUES
+		(#{otherMaintainName},#{otherMaintainMoney},#{otherMaintainInstruction})
+	</insert>
+    <update id="updateOtherMaintain" parameterType="com.superfly.cms.entity.OtherMaintain">
+        update other_maintain_t
+        <set>
+            <if test="otherMaintainName != null">other_maintain_name=#{otherMaintainName},</if>
+            <if test="otherMaintainMoney != null">other_maintain_money=#{otherMaintainMoney},</if>
+            other_maintain_instruction=#{otherMaintainInstruction}
+        </set>
+        where other_maintain_id=#{otherMaintainId}
+    </update>
+    <delete id="deleteOtherMaintain">
+		DELETE FROM
+		other_maintain_t
+		WHERE
+		other_maintain_id=#{otherMaintainId}
+	</delete>
+</mapper>

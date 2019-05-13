@@ -12,6 +12,7 @@ public class Fix {
     private Integer repairTeamId;
     private Integer repairId;
     private Integer otherCostId;
+    private Integer otherMaintainId;
     private Date nextMaintainDate;
     private Date fixOrderDate;
     private Date fixEndDate;
@@ -36,6 +37,8 @@ public class Fix {
 
     private String otherCostName;
     private String otherCostMoney;
+    private String otherMaintainName;
+    private String otherMaintainMoney;
 
     private String fixStatus;
     private Integer summerMoney;
@@ -61,6 +64,30 @@ public class Fix {
 
     public String getCusSex() {
         return cusSex;
+    }
+
+    public Integer getOthermaintainId() {
+        return otherMaintainId;
+    }
+
+    public void setOthermaintainId(Integer othermaintainId) {
+        this.otherMaintainId = othermaintainId;
+    }
+
+    public String getOtherMaintainName() {
+        return otherMaintainName;
+    }
+
+    public void setOtherMaintainName(String otherMaintainName) {
+        this.otherMaintainName = otherMaintainName;
+    }
+
+    public String getOtherMaintainMoney() {
+        return otherMaintainMoney;
+    }
+
+    public void setOtherMaintainMoney(String otherMaintainMoney) {
+        this.otherMaintainMoney = otherMaintainMoney;
     }
 
     public String getOtherCostMoney() {
@@ -288,6 +315,7 @@ public class Fix {
                 ", repairTeamId=" + repairTeamId +
                 ", repairId=" + repairId +
                 ", otherCostId=" + otherCostId +
+                ", otherMaintainId=" + otherMaintainId +
                 ", nextMaintainDate=" + nextMaintainDate +
                 ", fixOrderDate=" + fixOrderDate +
                 ", fixEndDate=" + fixEndDate +
@@ -305,6 +333,8 @@ public class Fix {
                 ", repairTeamName='" + repairTeamName + '\'' +
                 ", otherCostName='" + otherCostName + '\'' +
                 ", otherCostMoney='" + otherCostMoney + '\'' +
+                ", otherMaintainName='" + otherMaintainName + '\'' +
+                ", otherMaintainMoney='" + otherMaintainMoney + '\'' +
                 ", fixStatus='" + fixStatus + '\'' +
                 ", summerMoney=" + summerMoney +
                 ", repairRegulationsList=" + repairRegulationsList +

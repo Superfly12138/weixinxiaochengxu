@@ -100,6 +100,7 @@ public class AdminController {
 //            RepairRegulations repairRegulations = managerService.queryRepairRegulations(item.getRepairId());
             RepairTeam repairTeam = managerService.queryRepairTeam(item.getRepairTeamId());
             OtherCost otherCost = managerService.queryOtherCost(item.getOtherCostId());
+            OtherMaintain otherMaintain = managerService.queryOtherMaintain(item.getOthermaintainId());
 
             List<OwnRegulationsFix> ownRegulationsFixList = adminService.queryOwnRegulationsFixListByFixId(item.getFixId());
             List<RepairRegulations> tempRepairRegulationsList = new ArrayList<>();
@@ -144,7 +145,11 @@ public class AdminController {
 
             item.setOtherCostName(otherCost.getOtherCostName());
             item.setOtherCostMoney(otherCost.getOtherCostMoney());
+            item.setOtherMaintainName(otherMaintain.getOtherMaintainName());
+            item.setOtherMaintainMoney(otherMaintain.getOtherMaintainMoney());
+
             summer+=Integer.parseInt(otherCost.getOtherCostMoney());
+            summer+=Integer.parseInt(otherMaintain.getOtherMaintainMoney());
             if(item.getFixOver()==1){
                 item.setFixStatus("未完工");
             }

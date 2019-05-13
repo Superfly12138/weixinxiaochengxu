@@ -135,6 +135,41 @@ public interface ManagerService {
     boolean deleteOtherCost(Integer otherCostId);
 
     /**
+     * 查询所有的其它费用信息
+     *
+     * @return List<OtherMaintain>
+     */
+    List<OtherMaintain> queryOtherMaintainList();
+
+    /**
+     * 根据其它费用Id查询其它费用信息
+     * @param otherMaintainId
+     * @return OtherMaintain
+     */
+    OtherMaintain queryOtherMaintain(Integer otherMaintainId);
+
+    /**
+     * 添加其它费用信息
+     * @param otherMaintain
+     * @return true or false
+     */
+    boolean addOtherMaintain(OtherMaintain otherMaintain);
+
+    /**
+     * 更改其它费用的信息
+     * @param otherMaintain
+     * @return true or false
+     */
+    boolean modifyOtherMaintain(OtherMaintain otherMaintain);
+
+    /**
+     * 根据其它费用Id删除其它费用信息
+     * @param otherMaintainId
+     * @return true or false
+     */
+    boolean deleteOtherMaintain(Integer otherMaintainId);
+
+    /**
      * 查询所有的维修规定信息
      *
      * @return List<RepairRegulations>

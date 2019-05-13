@@ -349,6 +349,112 @@ public class ManagerController {
     }
 
     /**
+     * 查询所有的保养信息
+     *
+     * @return List<OtherMaintain>
+     */
+    @RequestMapping(value = "/getothermaintainlist", method = RequestMethod.GET)
+    private Map<String, Object> getohList() {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<OtherMaintain> otherMaintainList = managerService.queryOtherMaintainList();
+        modelMap.put("OtherMaintain", otherMaintainList);
+        return modelMap;
+    }
+
+    /**
+     * 查询所有的保养信息
+     * @param pageNum  当前页码
+     * @param pageSize  页内大小
+     * @return List<OtherMaintain>
+     */
+    @RequestMapping(value = "/getothermaintainlist_p", method = RequestMethod.GET)
+    private Map<String, Object> getohList_p(Integer pageNum,Integer pageSize) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        try {
+            //加入这句，可以直接把list的数据根据分页规则重新封装
+            Page page = PageHelper.startPage(pageNum,pageSize,true);
+
+            List<OtherMaintain> otherMaintainList = managerService.queryOtherMaintainList();
+            //总数据条数
+            modelMap.put("total", page.getTotal());
+            //当前页
+            modelMap.put("nowPage", pageNum);
+            //数据
+            modelMap.put("OtherMaintain", otherMaintainList);
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+    /**
+     * 根据保养Id查询保养信息
+     *
+     * @param otherMaintainId
+     * @return OtherMaintain
+     */
+    @RequestMapping(value = "/getothermaintainbyid", method = RequestMethod.GET)
+    private Map<String, Object> getOtherMaintainById(Integer otherMaintainId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        OtherMaintain otherMaintain = managerService.queryOtherMaintain(otherMaintainId);
+        modelMap.put("OtherMaintain", otherMaintain);
+        return modelMap;
+    }
+
+
+    /**
+     * 添加保养信息
+     *
+     * @param jsonString
+     * @return true or false
+     */
+    @RequestMapping(value = "/addothermaintain", method = RequestMethod.POST)
+    private Map<String, Object> addOtherMaintain(@RequestBody String jsonString) {
+        try {
+            //将接收到的json转换成Map
+            Map map = (Map) JSON.parse(jsonString);
+            OtherMaintain otherMaintain = JSON.toJavaObject((JSON) map.get("OtherMaintain"), com.superfly.cms.entity.OtherMaintain.class);
+            Map<String, Object> modelMap = new HashMap<String, Object>();
+            modelMap.put("success", managerService.addOtherMaintain(otherMaintain));
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    /**
+     * 更改保养的信息
+     *
+     * @param jsonString
+     * @return true or false
+     */
+    @RequestMapping(value = "/modifyothermaintain", method = RequestMethod.POST)
+    private Map<String, Object> modifyOtherMaintain(@RequestBody String jsonString) {
+        try {
+            //将接收到的json转换成Map
+            Map map = (Map) JSON.parse(jsonString);
+            OtherMaintain otherMaintain = JSON.toJavaObject((JSON) map.get("OtherMaintain"), com.superfly.cms.entity.OtherMaintain.class);
+            Map<String, Object> modelMap = new HashMap<String, Object>();
+            modelMap.put("success", managerService.modifyOtherMaintain(otherMaintain));
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    /**
+     * 根据保养Id删除保养信息
+     *
+     * @param otherMaintainId
+     * @return true or false
+     */
+    @RequestMapping(value = "/removeothermaintain", method = RequestMethod.GET)
+    private Map<String, Object> removeOtherMaintain(Integer otherMaintainId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        modelMap.put("success", managerService.deleteOtherMaintain(otherMaintainId));
+        return modelMap;
+    }
+
+    /**
      * 查询所有的维修规定信息
      *
      * @return List<RepairRegulations>
