@@ -212,7 +212,7 @@ public class RepairmanController {
         Car car = customerService.queryCarByCarId(fix.getCarId());
         FaultDefinition faultDefinition = managerService.queryFaultDefinition(fix.getFaultId());
         RepairType repairType = adminService.getRepairTypeById(fix.getRepairTypeId());
-        RepairRegulations repairRegulations = managerService.queryRepairRegulations(fix.getRepairId());
+//        RepairRegulations repairRegulations = managerService.queryRepairRegulations(fix.getRepairId());
         RepairTeam repairTeam = managerService.queryRepairTeam(fix.getRepairTeamId());
         OtherCost otherCost = managerService.queryOtherCost(fix.getOtherCostId());
 
@@ -228,8 +228,8 @@ public class RepairmanController {
 
         fix.setRepairTypeName(repairType.getRepairTypeName());
 
-        fix.setRepairName(repairRegulations.getRepairName());
-        fix.setRepairMoney(repairRegulations.getRepairMoney());
+//        fix.setRepairName(repairRegulations.getRepairName());
+//        fix.setRepairMoney(repairRegulations.getRepairMoney());
 
         fix.setRepairTeamName(repairTeam.getRepairTeamName());
 

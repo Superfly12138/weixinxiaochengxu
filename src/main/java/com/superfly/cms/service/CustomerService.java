@@ -5,6 +5,7 @@ import com.superfly.cms.entity.Customer;
 import com.superfly.cms.entity.Fix;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CustomerService {
     /**
@@ -118,9 +119,9 @@ public interface CustomerService {
 
     /**
      * 新建维修单信息
-     * @param fix
+     * @param map
      * @return true or false
      */
-    boolean addNewFix(Fix fix);
+    boolean addNewFix(Map map);
 
 }

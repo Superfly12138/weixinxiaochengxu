@@ -5,17 +5,13 @@
 <mapper namespace="com.superfly.cms.dao.FixDao">
 
     <select id="queryFix" resultType="com.superfly.cms.entity.Fix">
-       SELECT fix_id, cus_id, car_id, fault_id, repair_type_id, repair_team_id,
-        repair_id, other_cost_id, next_maintain_date,
-        fix_order_date, fix_end_date, fix_over
+       SELECT *
         FROM fix_t
 
     </select>
 
     <select id="queryFixByFixId" resultType="com.superfly.cms.entity.Fix">
-		SELECT fix_id, cus_id, car_id, fault_id, repair_type_id, repair_team_id,
-        repair_id, other_cost_id, next_maintain_date,
-        fix_order_date, fix_end_date, fix_over
+		SELECT *
         FROM fix_t
 		WHERE
 		fix_id=#{fixId}
@@ -25,11 +21,11 @@
             keyColumn="fix_id" parameterType="com.superfly.cms.entity.Fix">
 		INSERT INTO
 		fix_t( cus_id, car_id, fault_id, repair_type_id, repair_team_id,
-        repair_id, other_cost_id, next_maintain_date,
+         other_cost_id, next_maintain_date,
         fix_order_date, fix_end_date, fix_over)
 		VALUES
 		(#{cusId},#{carId},#{faultId},#{repairTypeId},#{repairTeamId},
-		#{repairId},#{otherCostId},#{nextMaintainDate},
+		#{otherCostId},#{nextMaintainDate},
 		#{fixOrderDate},#{fixEndDate},#{fixOver})
 	</insert>
     <update id="updateFix" parameterType="com.superfly.cms.entity.Fix">
@@ -40,7 +36,6 @@
             <if test="faultId != null">fault_id=#{faultId},</if>
             <if test="repairTypeId != null">repair_type_id=#{repairTypeId},</if>
             <if test="repairTeamId != null">repair_team_id=#{repairTeamId},</if>
-            <if test="repairId != null">repair_id=#{repairId},</if>
             <if test="otherCostId != null">other_cost_id=#{otherCostId},</if>
             <if test="fixOrderDate != null">fix_order_date=#{fixOrderDate},</if>
             <if test="fixOver != null">fix_over=#{fixOver},</if>

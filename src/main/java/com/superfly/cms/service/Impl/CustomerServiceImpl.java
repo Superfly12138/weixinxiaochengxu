@@ -1,13 +1,9 @@
 package com.superfly.cms.service.Impl;
 
-import com.superfly.cms.dao.CarDao;
-import com.superfly.cms.dao.CustomerDao;
-import com.superfly.cms.dao.FixDao;
-import com.superfly.cms.dao.OwnCusCarDao;
-import com.superfly.cms.entity.Car;
-import com.superfly.cms.entity.Customer;
-import com.superfly.cms.entity.Fix;
-import com.superfly.cms.entity.OwnCusCar;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.superfly.cms.dao.*;
+import com.superfly.cms.entity.*;
 import com.superfly.cms.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -27,6 +24,12 @@ public class CustomerServiceImpl implements CustomerService {
     private OwnCusCarDao ownCusCarDao;
     @Autowired
     private FixDao fixDao;
+    @Autowired
+    private OwnRegulationsFixDao ownRegulationsFixDao;
+    @Autowired
+    private OwnMaterialFixDao ownMaterialFixDao;
+    @Autowired
+    private MaterialDao materialDao;
 
     /**
      * 查询所有的顾客信息
@@ -257,7 +260,6 @@ public class CustomerServiceImpl implements CustomerService {
                     //通过拥有信息查询到汽车Id,通过汽车Id查询到汽车信息,放入list中
                     listCar.add(carDao.queryCarById(own.getCarId()));
                 }
-
                 return listCar;
             } else {
                 return null;
@@ -406,27 +408,69 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     /**
-     * 新建维修单信息
+     * 新新建维修单信息
      *
-     * @param fix
+     * @param map
      * @return true or false
      */
+    @Transactional
     @Override
-    public boolean addNewFix(Fix fix) {
-        if (fix == null) {
+    public boolean addNewFix(Map map) {
+        if (map == null) {
             throw new RuntimeException("前端传入数据无效，新建维修单失败！");
         }
         try {
+            Fix fix = JSON.toJavaObject((JSON) map.get("Fix"), com.superfly.cms.entity.Fix.class);
+            Object ownRegulationsFixObject = map.get("OwnRegulationsFix");
+            List<OwnRegulationsFix> ownRegulationsFixList =
+                    JSONObject.parseArray(ownRegulationsFixObject.toString(), com.superfly.cms.entity.OwnRegulationsFix.class);
+
+            Object ownMaterialFixObject = map.get("OwnMaterialFix");
+            List<OwnMaterialFix> ownMaterialFixList =
+                    JSONObject.parseArray(ownMaterialFixObject.toString(), com.superfly.cms.entity.OwnMaterialFix.class);
+
+//            System.out.println(ownRegulationsFixList);
+//            System.out.println(ownMaterialFixList);
+
+
             fix.setFixOrderDate(new Date());
             fix.setFixOver(1);
             int effectedNumber = fixDao.insertFix(fix);
             if (effectedNumber > 0) {
+                int fixId = fix.getFixId();
+                for (OwnRegulationsFix item : ownRegulationsFixList
+                ) {
+                    item.setFixId(fixId);
+                    if (ownRegulationsFixDao.insertOwnRegulationsFix(item) <= 0) {
+                        throw new RuntimeException("失败！");
+                    }
+
+                }
+                for (OwnMaterialFix item2 : ownMaterialFixList
+                ) {
+                    item2.setFixId(fixId);
+
+                    Material material = materialDao.queryMaterialById(item2.getMaterialId());
+                    if(item2.getOwnMaterialFixNumber() > material.getMaterialNumber()){
+                        throw new RuntimeException(material.getMaterialName()+"库存数量不足！");
+                    }else {
+                        material.setMaterialNumber(material.getMaterialNumber() - item2.getOwnMaterialFixNumber());
+                    }
+                    if(materialDao.updateMaterial(material) <= 0)
+                    {
+                        throw new RuntimeException("库存扣减失败！");
+                    }
+                    if (ownMaterialFixDao.insertOwnMaterialFix(item2) <= 0) {
+                        throw new RuntimeException("失败！");
+                    }
+                }
                 return true;
+
             } else {
                 throw new RuntimeException("更新失败！");
             }
         } catch (Exception e) {
-            throw new RuntimeException("更新失败！" + e.toString());
+            throw new RuntimeException("失败！" + e.toString());
         }
     }
 }

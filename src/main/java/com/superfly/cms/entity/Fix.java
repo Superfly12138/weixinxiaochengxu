@@ -1,6 +1,7 @@
 package com.superfly.cms.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Fix {
     private Integer fixId;
@@ -37,6 +38,26 @@ public class Fix {
     private String otherCostMoney;
 
     private String fixStatus;
+    private Integer summerMoney;
+
+    private List<RepairRegulations> repairRegulationsList;
+    private List<Material> materialList;
+
+    public List<RepairRegulations> getRepairRegulationsList() {
+        return repairRegulationsList;
+    }
+
+    public void setRepairRegulationsList(List<RepairRegulations> repairRegulationsList) {
+        this.repairRegulationsList = repairRegulationsList;
+    }
+
+    public List<Material> getMaterialList() {
+        return materialList;
+    }
+
+    public void setMaterialList(List<Material> materialList) {
+        this.materialList = materialList;
+    }
 
     public String getCusSex() {
         return cusSex;
@@ -248,6 +269,14 @@ public class Fix {
         this.fixStatus = fixStatus;
     }
 
+    public Integer getSummerMoney() {
+        return summerMoney;
+    }
+
+    public void setSummerMoney(Integer summerMoney) {
+        this.summerMoney = summerMoney;
+    }
+
     @Override
     public String toString() {
         return "Fix{" +
@@ -277,6 +306,9 @@ public class Fix {
                 ", otherCostName='" + otherCostName + '\'' +
                 ", otherCostMoney='" + otherCostMoney + '\'' +
                 ", fixStatus='" + fixStatus + '\'' +
+                ", summerMoney=" + summerMoney +
+                ", repairRegulationsList=" + repairRegulationsList +
+                ", materialList=" + materialList +
                 '}';
     }
 }

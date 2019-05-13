@@ -7,6 +7,7 @@ public class Material {
     private String materialInmoney;
     private String materialOutmoney;
 
+    private Integer count;
     public Integer getMaterialId() {
         return materialId;
     }
@@ -47,6 +48,14 @@ public class Material {
         this.materialOutmoney = materialOutmoney;
     }
 
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
     @Override
     public String toString() {
         return "Material{" +
@@ -55,6 +64,7 @@ public class Material {
                 ", materialNumber=" + materialNumber +
                 ", materialInmoney='" + materialInmoney + '\'' +
                 ", materialOutmoney='" + materialOutmoney + '\'' +
+                ", count=" + count +
                 '}';
     }
 }

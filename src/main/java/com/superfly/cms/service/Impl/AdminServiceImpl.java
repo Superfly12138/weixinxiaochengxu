@@ -1,10 +1,7 @@
 package com.superfly.cms.service.Impl;
 
 import com.superfly.cms.dao.*;
-import com.superfly.cms.entity.Instock;
-import com.superfly.cms.entity.Material;
-import com.superfly.cms.entity.Outstock;
-import com.superfly.cms.entity.RepairType;
+import com.superfly.cms.entity.*;
 import com.superfly.cms.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +24,10 @@ public class AdminServiceImpl implements AdminService {
     private InstockDao instockDao;
     @Autowired
     private OutstockDao outstockDao;
+    @Autowired
+    private OwnRegulationsFixDao ownRegulationsFixDao;
+    @Autowired
+    private OwnMaterialFixDao ownMaterialFixDao;
 
     /**
      * 通过姓名登录
@@ -522,6 +523,63 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    /**
+     * 查询所有维修项目表
+     *
+     * @return List<Outstock>
+     */
+    @Override
+    public List<OwnRegulationsFix> queryOwnRegulationsFixList() {
+        try {
+            return ownRegulationsFixDao.queryOwnRegulationsFix();
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    /**
+     * 通过fixId查询所有维修项目表
+     *
+     * @param fixId
+     * @return List<Outstock>
+     */
+    @Override
+    public List<OwnRegulationsFix> queryOwnRegulationsFixListByFixId(Integer fixId) {
+        try {
+            return ownRegulationsFixDao.queryOwnRegulationsFixByFixId(fixId);
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    /**
+     * 查询所有表
+     *
+     * @return List<OwnMaterialFix>
+     */
+    @Override
+    public List<OwnMaterialFix> queryOwnMaterialFixList() {
+        try {
+            return ownMaterialFixDao.queryOwnMaterialFix();
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    /**
+     * 通过fixId查询所有表
+     *
+     * @param fixId
+     * @return List<OwnMaterialFix>
+     */
+    @Override
+    public List<OwnMaterialFix> queryOwnMaterialFixListByFixId(Integer fixId) {
+        try {
+            return ownMaterialFixDao.queryOwnMaterialFixByFixId(fixId);
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
 
 
 }

@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/admin")
@@ -95,15 +92,38 @@ public class AdminController {
         List<Fix> fixList = repairmanService.queryFixList();
         for (Fix item:fixList
         ) {
-
-
+            int summer = 0;
             Customer customer = customerService.getCustomerById(item.getCusId());
             Car car = customerService.queryCarByCarId(item.getCarId());
             FaultDefinition faultDefinition = managerService.queryFaultDefinition(item.getFaultId());
             RepairType repairType = adminService.getRepairTypeById(item.getRepairTypeId());
-            RepairRegulations repairRegulations = managerService.queryRepairRegulations(item.getRepairId());
+//            RepairRegulations repairRegulations = managerService.queryRepairRegulations(item.getRepairId());
             RepairTeam repairTeam = managerService.queryRepairTeam(item.getRepairTeamId());
             OtherCost otherCost = managerService.queryOtherCost(item.getOtherCostId());
+
+            List<OwnRegulationsFix> ownRegulationsFixList = adminService.queryOwnRegulationsFixListByFixId(item.getFixId());
+            List<RepairRegulations> tempRepairRegulationsList = new ArrayList<>();
+
+            for (OwnRegulationsFix item2:ownRegulationsFixList
+            ) {
+                RepairRegulations repairRegulations = managerService.queryRepairRegulations(item2.getRepairId());
+                summer += Integer.parseInt(repairRegulations.getRepairMoney());
+                tempRepairRegulationsList.add(repairRegulations);
+            }
+
+            List<OwnMaterialFix> ownMaterialFixList = adminService.queryOwnMaterialFixListByFixId(item.getFixId());
+            List<Material> tempMaterialList = new ArrayList<>();
+
+            for (OwnMaterialFix item3:ownMaterialFixList
+            ) {
+                Material material = adminService.queryMaterialByMaterialId(item3.getMaterialId());
+                material.setCount(item3.getOwnMaterialFixNumber());
+                summer += (Integer.parseInt(material.getMaterialOutmoney()))*(item3.getOwnMaterialFixNumber());
+                tempMaterialList.add(material);
+            }
+
+            item.setRepairRegulationsList(tempRepairRegulationsList);
+            item.setMaterialList(tempMaterialList);
 
             item.setCusName(customer.getCusName());
             item.setCusSex(customer.getCusSex());
@@ -116,20 +136,23 @@ public class AdminController {
             item.setFaultName(faultDefinition.getFaultName());
 
             item.setRepairTypeName(repairType.getRepairTypeName());
-
-            item.setRepairName(repairRegulations.getRepairName());
-            item.setRepairMoney(repairRegulations.getRepairMoney());
+//
+//            item.setRepairName(repairRegulations.getRepairName());
+//            item.setRepairMoney(repairRegulations.getRepairMoney());
 
             item.setRepairTeamName(repairTeam.getRepairTeamName());
 
             item.setOtherCostName(otherCost.getOtherCostName());
             item.setOtherCostMoney(otherCost.getOtherCostMoney());
+            summer+=Integer.parseInt(otherCost.getOtherCostMoney());
             if(item.getFixOver()==1){
                 item.setFixStatus("未完工");
             }
             if(item.getFixOver()==2){
                 item.setFixStatus("已完工");
             }
+            item.setSummerMoney(summer);
+
         }
         modelMap.put("Fix", fixList);
         return modelMap;

@@ -1,9 +1,6 @@
 package com.superfly.cms.service;
 
-import com.superfly.cms.entity.Instock;
-import com.superfly.cms.entity.Material;
-import com.superfly.cms.entity.Outstock;
-import com.superfly.cms.entity.RepairType;
+import com.superfly.cms.entity.*;
 
 import java.util.List;
 
@@ -167,7 +164,33 @@ public interface AdminService {
     boolean deleteOutstock(Integer outstockId);
 
 
+    /**
+     * 查询所有维修项目表
+     *
+     * @return List<OwnRegulationsFix>
+     */
+    List<OwnRegulationsFix> queryOwnRegulationsFixList();
 
+    /**
+     * 通过fixId查询所有维修项目表
+     *
+     * @return List<OwnRegulationsFix>
+     */
+    List<OwnRegulationsFix> queryOwnRegulationsFixListByFixId(Integer fixId);
+
+    /**
+     * 查询所有维修项目表
+     *
+     * @return List<OwnMaterialFix>
+     */
+    List<OwnMaterialFix> queryOwnMaterialFixList();
+
+    /**
+     * 通过fixId查询所有维修项目表
+     *
+     * @return List<OwnMaterialFix>
+     */
+    List<OwnMaterialFix> queryOwnMaterialFixListByFixId(Integer fixId);
 
 
 

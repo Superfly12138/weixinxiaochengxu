@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.OwnRegulationsFixDao">
+
+    <select id="queryOwnRegulationsFix" resultType="com.superfly.cms.entity.OwnRegulationsFix">
+         select *
+         from own_regulations_fix_t
+     </select>
+    <select id="queryOwnRegulationsFixByOwnId" resultType="com.superfly.cms.entity.OwnRegulationsFix">
+		 select *
+         from own_regulations_fix_t
+		WHERE
+		own_id=#{ownId}
+	</select>
+    <select id="queryOwnRegulationsFixByFixId" resultType="com.superfly.cms.entity.OwnRegulationsFix">
+		select *
+         from own_regulations_fix_t
+		WHERE
+		fix_id=#{fixId}
+	</select>
+    <insert id="insertOwnRegulationsFix" useGeneratedKeys="true" keyProperty="ownId"
+            keyColumn="own_id" parameterType="com.superfly.cms.entity.OwnRegulationsFix">
+		INSERT INTO
+		own_regulations_fix_t(repair_id, fix_id)
+		VALUES
+		(#{repairId},#{fixId})
+	</insert>
+    <update id="updateOwnRegulationsFix" parameterType="com.superfly.cms.entity.OwnRegulationsFix">
+        update own_regulations_fix_t
+        <set>
+            <if test="repairId != null">repair_id=#{repairId},</if>
+            <if test="fixId != null">fix_id=#{fixId},</if>
+        </set>
+        where own_id=#{ownId}
+    </update>
+    <delete id="deleteOwnRegulationsFix">
+		DELETE FROM
+		own_regulations_fix_t
+		WHERE
+		own_id=#{ownId}
+	</delete>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superfly.cms.dao.OwnMaterialFixDao">
+
+    <select id="queryOwnMaterialFix" resultType="com.superfly.cms.entity.OwnMaterialFix">
+         select *
+         from own_material_fix_t
+     </select>
+    <select id="queryOwnMaterialFixByOwnId" resultType="com.superfly.cms.entity.OwnMaterialFix">
+		 select *
+         from own_material_fix_t
+		WHERE
+		own_id=#{ownId}
+	</select>
+    <select id="queryOwnMaterialFixByFixId" resultType="com.superfly.cms.entity.OwnMaterialFix">
+		select *
+         from own_material_fix_t
+		WHERE
+		fix_id=#{fixId}
+	</select>
+    <insert id="insertOwnMaterialFix" useGeneratedKeys="true" keyProperty="ownId"
+            keyColumn="own_id" parameterType="com.superfly.cms.entity.OwnMaterialFix">
+		INSERT INTO
+		own_material_fix_t(material_id, fix_id,own_material_fix_number)
+		VALUES
+		(#{materialId},#{fixId},#{ownMaterialFixNumber})
+	</insert>
+    <update id="updateOwnMaterialFix" parameterType="com.superfly.cms.entity.OwnMaterialFix">
+        update own_material_fix_t
+        <set>
+            <if test="materialId != null">material_id=#{materialId},</if>
+            <if test="fixId != null">fix_id=#{fixId},</if>
+            <if test="ownMaterialFixNumber != null">own_material_fix_number=#{ownMaterialFixNumber},</if>
+        </set>
+        where own_id=#{ownId}
+    </update>
+    <delete id="deleteOwnMaterialFix">
+		DELETE FROM
+		own_material_fix_t
+		WHERE
+		own_id=#{ownId}
+	</delete>
+</mapper>

@@ -304,4 +304,25 @@ public class CustomerController {
         }
     }
 
+
+
+    /**
+     * 新新建维修单
+     * @param jsonString contains(carId,faultId)
+     * @return
+     */
+    @RequestMapping(value = "/addfix2", method = RequestMethod.POST)
+    private Map<String, Object> addFix2(@RequestBody String jsonString) {
+        try {
+            System.out.println(jsonString);
+            //将接收到的json转换成Map
+            Map map = (Map) JSON.parse(jsonString);
+            Map<String, Object> modelMap = new HashMap<String, Object>();
+            modelMap.put("success", customerService.addNewFix(map));
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
 }
