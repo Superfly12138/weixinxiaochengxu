@@ -387,7 +387,32 @@ public class AdminController {
     }
 
 
+    /**
+     * 查询所有的当天销售信息
+     *
+     * @return List<Own>
+     */
+    @RequestMapping(value = "/getmaterialselltoday", method = RequestMethod.GET)
+    private Map<String, Object> getMaterialSellToday() {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<OwnMaterialFix> ownMaterialFixList = adminService.queryOwnMaterialFixSellToday();
+        for (OwnMaterialFix item:ownMaterialFixList
+        ) {
+            Material material = adminService.queryMaterialByMaterialId(item.getMaterialId());
+            item.setMaterialName(material.getMaterialName());
+            item.setMaterialInMoney(material.getMaterialInmoney());
+            item.setMaterialOutMoney(material.getMaterialOutmoney());
+        }
 
+        ListIterator<OwnMaterialFix> listIterator= ownMaterialFixList.listIterator();
+        while(listIterator.hasNext()){
+            if(listIterator.next().getMaterialsummer() == 0) {
+                listIterator.remove();
+            }
+        }
+        modelMap.put("MaterialSellToday", ownMaterialFixList);
+        return modelMap;
+    }
 
 
     /**

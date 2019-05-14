@@ -8,6 +8,14 @@
          select *
          from own_material_fix_t
      </select>
+
+    <select id="queryOwnMaterialFixSellToday" resultType="com.superfly.cms.entity.OwnMaterialFix">
+        select material_id, sum(own_material_fix_number) materialsummer
+        from cms.own_material_fix_t as A , cms.fix_t as B
+        where A.fix_id=B.fix_id and fix_order_date between #{date1} and #{date2}
+        group by material_id
+     </select>
+
     <select id="queryOwnMaterialFixByOwnId" resultType="com.superfly.cms.entity.OwnMaterialFix">
 		 select *
          from own_material_fix_t

@@ -69,6 +69,13 @@ public interface AdminService {
 
 
     /**
+     * 查询当天销售统计
+     *
+     * @return List<Instock>
+     */
+    List<OwnMaterialFix> queryOwnMaterialFixSellToday();
+
+    /**
      * 查询所有入库单
      *
      * @return List<Instock>

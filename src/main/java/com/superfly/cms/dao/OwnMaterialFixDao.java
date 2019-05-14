@@ -2,6 +2,7 @@ package com.superfly.cms.dao;
 
 import com.superfly.cms.entity.OwnMaterialFix;
 
+import java.util.Date;
 import java.util.List;
 
 public interface OwnMaterialFixDao {
@@ -10,6 +11,11 @@ public interface OwnMaterialFixDao {
      * @return
      */
     List<OwnMaterialFix> queryOwnMaterialFix();
+    /**
+     * 查询当天销售统计
+     * @return
+     */
+    List<OwnMaterialFix> queryOwnMaterialFixSellToday(Date date1, Date date2);
 
     /**
      * 通过id查询信息

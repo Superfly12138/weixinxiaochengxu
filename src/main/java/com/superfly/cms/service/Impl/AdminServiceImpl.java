@@ -222,6 +222,33 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
+     * 查询当天销售统计
+     *
+     * @return List<Instock>
+     */
+    @Override
+    public List<OwnMaterialFix> queryOwnMaterialFixSellToday() {
+        try {
+            Date date1 = new Date();
+            Date date2 = new Date();
+            Calendar cal = new GregorianCalendar();
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            cal.set(Calendar.MINUTE, 59);
+            cal.set(Calendar.SECOND, 59);
+            date2 =cal.getTime();
+
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            date1 =cal.getTime();
+
+            return ownMaterialFixDao.queryOwnMaterialFixSellToday(date1,date2);
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    /**
      * 查询所有入库单
      *
      * @return List<Instock>
