@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -100,7 +102,7 @@ public class AdminController {
 //            RepairRegulations repairRegulations = managerService.queryRepairRegulations(item.getRepairId());
             RepairTeam repairTeam = managerService.queryRepairTeam(item.getRepairTeamId());
             OtherCost otherCost = managerService.queryOtherCost(item.getOtherCostId());
-            OtherMaintain otherMaintain = managerService.queryOtherMaintain(item.getOthermaintainId());
+            OtherMaintain otherMaintain = managerService.queryOtherMaintain(item.getOtherMaintainId());
 
             List<OwnRegulationsFix> ownRegulationsFixList = adminService.queryOwnRegulationsFixListByFixId(item.getFixId());
             List<RepairRegulations> tempRepairRegulationsList = new ArrayList<>();
@@ -156,6 +158,19 @@ public class AdminController {
             if(item.getFixOver()==2){
                 item.setFixStatus("已完工");
             }
+
+            DateFormat df= new SimpleDateFormat("yyyy年MM月dd日  HH:mm");//对日期进行格式化
+            DateFormat df2= new SimpleDateFormat("yyyy年MM月dd日");//对日期进行格式化
+
+            String FixOrderDateF =df.format(item.getFixOrderDate());
+            if(item.getFixOver()==2){
+                String FixEndDateF =df.format(item.getFixEndDate());
+                item.setFixEndDateFormat(FixEndDateF);
+            }
+            String NextMaintainDateF =df2.format(item.getNextMaintainDate());
+            item.setFixOrderDateFormat(FixOrderDateF);
+            item.setNextMaintainDateFormat(NextMaintainDateF);
+
             item.setSummerMoney(summer);
 
         }
@@ -164,6 +179,78 @@ public class AdminController {
     }
 
 
+
+    /**
+     * 获取所有的维修信息(未完工)
+     * @return
+     */
+    @RequestMapping(value = "/getfixlist2", method = RequestMethod.GET)
+    private Map<String, Object> getfixlist2() {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+
+        Map map = getfixlist();
+        List<Fix> list = (List<Fix>) map.get("Fix");
+        ListIterator<Fix> listIterator =  list.listIterator();
+        while(listIterator.hasNext()){
+            if(listIterator.next().getFixOver() == 2) {
+                listIterator.remove();
+            }
+        }
+
+        modelMap.put("Fix", list);
+        return modelMap;
+    }
+
+
+
+    /**
+     * 获取所有的维修信息(已完工)
+     * @return
+     */
+    @RequestMapping(value = "/getfixlist3", method = RequestMethod.GET)
+    private Map<String, Object> getfixlist3() {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+
+        Map map = getfixlist();
+        List<Fix> list = (List<Fix>) map.get("Fix");
+        ListIterator<Fix> listIterator =  list.listIterator();
+        while(listIterator.hasNext()){
+            if(listIterator.next().getFixOver() == 1) {
+                listIterator.remove();
+            }
+        }
+
+        modelMap.put("Fix", list);
+        return modelMap;
+    }
+
+
+    /**
+     * 获取所有的维修信息(已完工)保养提醒
+     * @return
+     */
+    @RequestMapping(value = "/getfixlistmaintain", method = RequestMethod.GET)
+    private Map<String, Object> getfixlistmaintain() {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+
+        Calendar calendarNow = Calendar.getInstance();
+        Calendar calendarNow3 = Calendar.getInstance();
+        calendarNow3.add(Calendar.DATE, 7);
+
+        Map map = getfixlist();
+        List<Fix> list = (List<Fix>) map.get("Fix");
+        ListIterator<Fix> listIterator =  list.listIterator();
+        while(listIterator.hasNext()){
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(listIterator.next().getNextMaintainDate());
+            if(calendarNow3.before(calendar) ||calendarNow.after(calendar)) {
+                listIterator.remove();
+            }
+        }
+
+        modelMap.put("Fix", list);
+        return modelMap;
+    }
 
 
 
@@ -192,9 +279,10 @@ public class AdminController {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<Material> materialList = adminService.queryMaterialList();
         ListIterator<Material> listIterator = materialList.listIterator();
-
+        String str = String.valueOf('0');
         while(listIterator.hasNext()){
-            if(listIterator.next().getMaterialNumber()>10) {
+            Material material = listIterator.next();
+            if(material.getMaterialNumber()>11 || material.getMaterialName().equals("无")) {
                     listIterator.remove();
             }
         }

@@ -43,6 +43,10 @@ public class Fix {
     private String fixStatus;
     private Integer summerMoney;
 
+    private String nextMaintainDateFormat;
+    private String fixOrderDateFormat;
+    private String fixEndDateFormat;
+
     private List<RepairRegulations> repairRegulationsList;
     private List<Material> materialList;
 
@@ -66,13 +70,7 @@ public class Fix {
         return cusSex;
     }
 
-    public Integer getOthermaintainId() {
-        return otherMaintainId;
-    }
 
-    public void setOthermaintainId(Integer othermaintainId) {
-        this.otherMaintainId = othermaintainId;
-    }
 
     public String getOtherMaintainName() {
         return otherMaintainName;
@@ -304,6 +302,48 @@ public class Fix {
         this.summerMoney = summerMoney;
     }
 
+
+//
+//    public Integer getOthermaintainId() {
+//        return otherMaintainId;
+//    }
+//
+//    public void setOthermaintainId(Integer othermaintainId) {
+//        this.otherMaintainId = othermaintainId;
+//    }
+
+    public Integer getOtherMaintainId() {
+        return otherMaintainId;
+    }
+
+    public void setOtherMaintainId(Integer otherMaintainId) {
+        this.otherMaintainId = otherMaintainId;
+    }
+
+    public String getNextMaintainDateFormat() {
+        return nextMaintainDateFormat;
+    }
+
+    public void setNextMaintainDateFormat(String nextMaintainDateFormat) {
+        this.nextMaintainDateFormat = nextMaintainDateFormat;
+    }
+
+    public String getFixOrderDateFormat() {
+        return fixOrderDateFormat;
+    }
+
+    public void setFixOrderDateFormat(String fixOrderDateFormat) {
+        this.fixOrderDateFormat = fixOrderDateFormat;
+    }
+
+    public String getFixEndDateFormat() {
+        return fixEndDateFormat;
+    }
+
+    public void setFixEndDateFormat(String fixEndDateFormat) {
+        this.fixEndDateFormat = fixEndDateFormat;
+    }
+
     @Override
     public String toString() {
         return "Fix{" +
@@ -337,6 +377,9 @@ public class Fix {
                 ", otherMaintainMoney='" + otherMaintainMoney + '\'' +
                 ", fixStatus='" + fixStatus + '\'' +
                 ", summerMoney=" + summerMoney +
+                ", nextMaintainDateFormat='" + nextMaintainDateFormat + '\'' +
+                ", fixOrderDateFormat='" + fixOrderDateFormat + '\'' +
+                ", fixEndDateFormat='" + fixEndDateFormat + '\'' +
                 ", repairRegulationsList=" + repairRegulationsList +
                 ", materialList=" + materialList +
                 '}';
