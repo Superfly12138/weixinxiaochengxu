@@ -18,6 +18,14 @@ public interface CarDao {
      */
      Car queryCarById(Integer carId);
 
+
+    /**
+     * 通过车牌查询车辆
+     * @param carNumber
+     * @return 单个车辆
+     */
+    Car queryCarByCarNumber(String carNumber);
+
     /**
      * 插入车辆信息
      * @param car

@@ -10,6 +10,7 @@ import com.superfly.cms.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,37 @@ public class CustomerController {
             Page page = PageHelper.startPage(pageNum, pageSize, true);
 
             List<Customer> list = customerService.getCustomerList();
+            //总数据条数
+            modelMap.put("total", page.getTotal());
+            //当前页
+            modelMap.put("nowPage", pageNum);
+            //数据
+            modelMap.put("Customer", list);
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+    /**
+     * 得到用户列表(分页方式)
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/getcuslist_p_filtername", method = RequestMethod.GET)
+    private Map<String, Object> getCustomerList_p_filtername(Integer pageNum,Integer pageSize,String cusName) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        try {
+            List<Customer> list = new ArrayList<>();
+            Page page = null;
+            if (cusName != null) {
+                //加入这句，可以直接把list的数据根据分页规则重新封装
+                 page = PageHelper.startPage(pageNum, pageSize, true);
+                 list = customerService.getCustomerListFilterName(cusName);
+            } else {
+                 page = PageHelper.startPage(pageNum, pageSize, true);
+                 list = customerService.getCustomerList();
+            }
             //总数据条数
             modelMap.put("total", page.getTotal());
             //当前页
@@ -201,6 +233,48 @@ public class CustomerController {
             modelMap.put("total", page.getTotal());
             //当前页
             modelMap.put("nowPage", pageNum);
+            //数据
+            modelMap.put("Cars", carList);
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+
+    }
+
+    /**
+     * 通过顾客Id查询拥有的汽车信息（分页方式）
+     * @param pageNum  当前页码
+     * @param pageSize  页内大小
+     * @param cusId  顾客Id
+     * @return CarList
+     */
+    @RequestMapping(value = "/getcarsbycusid_p_filtercarnumber", method = RequestMethod.GET)
+    private Map<String, Object> getCarsByCusId_P_carnumber(Integer pageNum,Integer pageSize,Integer cusId,String carNumber) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        try {
+            List<Car> carList = new ArrayList<>();
+            Page page = null;
+            if (carNumber != null) {
+                //加入这句，可以直接把list的数据根据分页规则重新封装
+                Car car = customerService.queryCarByCarNumber(carNumber);
+                System.out.println(car);
+                if(car!=null){
+                    carList.add(car);
+                    modelMap.put("total", 1);
+                    modelMap.put("nowPage", 1);
+                }else {
+                    modelMap.put("total", 0);
+                }
+
+            } else {
+                page = PageHelper.startPage(pageNum, pageSize, true);
+                carList = customerService.queryCarList(cusId);;
+                modelMap.put("total", page.getTotal());
+                modelMap.put("nowPage", pageNum);
+            }
+            //总数据条数
+            //当前页
             //数据
             modelMap.put("Cars", carList);
             return modelMap;

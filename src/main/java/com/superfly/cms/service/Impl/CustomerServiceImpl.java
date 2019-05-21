@@ -45,6 +45,21 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+    /**
+     * 查询所有的顾客信息(通过名称筛选)
+     *
+     * @param cusName
+     * @return
+     */
+    @Override
+    public List<Customer> getCustomerListFilterName(String cusName) {
+        try {
+            return customerDao.queryCustomerFilterName(cusName);
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
     @Override
     public Customer getCustomerById(Integer cusId) {
         try {
@@ -280,6 +295,22 @@ public class CustomerServiceImpl implements CustomerService {
     public Car queryCarByCarId(Integer carId) {
         try {
            return carDao.queryCarById(carId);
+
+        } catch (Exception e) {
+            throw new RuntimeException("查询失败!" + e.toString());
+        }
+    }
+
+    /**
+     * 通过汽车车牌查询汽车
+     *
+     * @param carNumber
+     * @return
+     */
+    @Override
+    public Car queryCarByCarNumber(String carNumber) {
+        try {
+            return carDao.queryCarByCarNumber(carNumber);
 
         } catch (Exception e) {
             throw new RuntimeException("查询失败!" + e.toString());

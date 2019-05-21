@@ -14,6 +14,11 @@ public interface CustomerService {
      */
     List<Customer> getCustomerList();
     /**
+     * 查询所有的顾客信息(通过名称筛选)
+     * @return
+     */
+    List<Customer> getCustomerListFilterName(String cusName);
+    /**
      * 根据客户Id获取客户信息
      *
      * @param cusId
@@ -85,6 +90,13 @@ public interface CustomerService {
      * @return
      */
     Car queryCarByCarId(Integer carId);
+
+    /**
+     * 通过汽车车牌查询汽车
+     * @param carNumber
+     * @return
+     */
+    Car queryCarByCarNumber(String carNumber);
 
     /**
      * 添加汽车信息

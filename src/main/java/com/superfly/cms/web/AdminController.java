@@ -202,6 +202,49 @@ public class AdminController {
     }
 
 
+    /**
+     * 获取所有的维修信息(未完工)筛选(姓名)
+     * @return
+     */
+    @RequestMapping(value = "/getfixlist2_cusName", method = RequestMethod.GET)
+    private Map<String, Object> getfixlist2_cusName(String CusName) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+
+        Map map = getfixlist2();
+        List<Fix> list = (List<Fix>) map.get("Fix");
+        ListIterator<Fix> listIterator =  list.listIterator();
+        while(listIterator.hasNext()){
+            if(!listIterator.next().getCusName().equals(CusName) && CusName != null) {
+                listIterator.remove();
+            }
+        }
+
+        modelMap.put("Fix", list);
+        return modelMap;
+    }
+
+    /**
+     * 获取所有的维修信息(未完工)筛选(车牌)
+     * @return
+     */
+    @RequestMapping(value = "/getfixlist2_carnumber", method = RequestMethod.GET)
+    private Map<String, Object> getfixlist2_carnumber(String CarNumber) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+
+        Map map = getfixlist2();
+        List<Fix> list = (List<Fix>) map.get("Fix");
+        ListIterator<Fix> listIterator =  list.listIterator();
+        while(listIterator.hasNext()){
+            if(!listIterator.next().getCarNumber().equals(CarNumber) && CarNumber != null) {
+                listIterator.remove();
+            }
+        }
+
+        modelMap.put("Fix", list);
+        return modelMap;
+    }
+
+
 
     /**
      * 获取所有的维修信息(已完工)
@@ -216,6 +259,49 @@ public class AdminController {
         ListIterator<Fix> listIterator =  list.listIterator();
         while(listIterator.hasNext()){
             if(listIterator.next().getFixOver() == 1) {
+                listIterator.remove();
+            }
+        }
+
+        modelMap.put("Fix", list);
+        return modelMap;
+    }
+
+
+    /**
+     * 获取所有的维修信息(已完工)筛选(姓名)
+     * @return
+     */
+    @RequestMapping(value = "/getfixlist3_cusName", method = RequestMethod.GET)
+    private Map<String, Object> getfixlist3_cusName(String CusName) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+
+        Map map = getfixlist3();
+        List<Fix> list = (List<Fix>) map.get("Fix");
+        ListIterator<Fix> listIterator =  list.listIterator();
+        while(listIterator.hasNext()){
+            if(!listIterator.next().getCusName().equals(CusName) && CusName != null) {
+                listIterator.remove();
+            }
+        }
+
+        modelMap.put("Fix", list);
+        return modelMap;
+    }
+
+    /**
+     * 获取所有的维修信息(已完工)筛选(车牌)
+     * @return
+     */
+    @RequestMapping(value = "/getfixlist3_carnumber", method = RequestMethod.GET)
+    private Map<String, Object> getfixlist3_carnumber(String CarNumber) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+
+        Map map = getfixlist3();
+        List<Fix> list = (List<Fix>) map.get("Fix");
+        ListIterator<Fix> listIterator =  list.listIterator();
+        while(listIterator.hasNext()){
+            if(!listIterator.next().getCarNumber().equals(CarNumber) && CarNumber != null) {
                 listIterator.remove();
             }
         }
@@ -270,6 +356,50 @@ public class AdminController {
 //        return modelMap;
 //    }
 
+    /**
+     * 获取所有的维修信息(已完工)保养提醒（按姓名筛选）
+     * @return
+     */
+    @RequestMapping(value = "/getfixlistmaintain_filtername", method = RequestMethod.GET)
+    private Map<String, Object> getfixlistmaintain_filtername(String CusName) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Map map = getfixlistmaintain();
+        List<Fix> list = (List<Fix>) map.get("Fix");
+
+        ListIterator<Fix> listIterator =  list.listIterator();
+        while(listIterator.hasNext()){
+
+            if (!listIterator.next().getCusName().equals(CusName) && CusName != null) {
+                listIterator.remove();
+            }
+        }
+
+        modelMap.put("Fix", list);
+        return modelMap;
+    }
+
+    /**
+     * 获取所有的维修信息(已完工)保养提醒（按车牌筛选）
+     * @return
+     */
+    @RequestMapping(value = "/getfixlistmaintain_filtercarnumber", method = RequestMethod.GET)
+    private Map<String, Object> getfixlistmaintain_filtercarnumber(String CarNumber) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Map map = getfixlistmaintain();
+        List<Fix> list = (List<Fix>) map.get("Fix");
+
+        ListIterator<Fix> listIterator =  list.listIterator();
+        while(listIterator.hasNext()){
+
+            if (!listIterator.next().getCarNumber().equals(CarNumber) && CarNumber != null) {
+                listIterator.remove();
+            }
+        }
+
+        modelMap.put("Fix", list);
+        return modelMap;
+    }
+
 
 
 
@@ -289,6 +419,28 @@ public class AdminController {
 
 
     /**
+     * 查询所有的材料信息（按名称筛选）
+     * @return
+     */
+    @RequestMapping(value = "/getmateriallist_filtername", method = RequestMethod.GET)
+    private Map<String, Object> getMaterialList_filtername(String MaterialName) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Map map = getMaterialList();
+        List<Material> list = adminService.queryMaterialList();
+
+        ListIterator<Material> listIterator =  list.listIterator();
+        while(listIterator.hasNext()){
+
+            if (!listIterator.next().getMaterialName().equals(MaterialName) && MaterialName != null) {
+                listIterator.remove();
+            }
+        }
+
+        modelMap.put("Material", list);
+        return modelMap;
+    }
+
+    /**
      * 查询所有的材料下限信息
      *
      * @return List<Material>
@@ -301,7 +453,7 @@ public class AdminController {
         String str = String.valueOf('0');
         while(listIterator.hasNext()){
             Material material = listIterator.next();
-            if(material.getMaterialNumber()>11 || material.getMaterialName().equals("无")) {
+            if(material.getMaterialNumber()> 9 || material.getMaterialName().equals("无")) {
                     listIterator.remove();
             }
         }

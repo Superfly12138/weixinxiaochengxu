@@ -12,6 +12,15 @@
        order by cus_id
     </select>
 
+    <select id="queryCustomerFilterName" resultType="com.superfly.cms.entity.Customer">
+       select cus_id,cus_password,cus_name,cus_sex,
+       cus_age,cus_phone,cus_address,
+       cus_email,cus_registration_date
+       from customer_t
+       where cus_name =#{cusName}
+       order by cus_id
+    </select>
+
     <select id="queryCustomerById" resultType="com.superfly.cms.entity.Customer">
 		SELECT cus_id,cus_password,cus_name,cus_sex,
        cus_age,cus_phone,cus_address,

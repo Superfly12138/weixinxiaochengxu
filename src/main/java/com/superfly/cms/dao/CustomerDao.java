@@ -10,6 +10,11 @@ public interface CustomerDao {
      * @return 顾客列表
      */
     List<Customer> queryCustomer();
+    /**
+     * 查询所有的顾客(通过姓名筛选)
+     * @return 顾客列表
+     */
+    List<Customer> queryCustomerFilterName(String cusName);
 
     /**
      * @param cusId

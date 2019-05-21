@@ -17,6 +17,13 @@
 		car_id=#{carId}
 	</select>
 
+    <select id="queryCarByCarNumber" resultType="com.superfly.cms.entity.Car">
+		SELECT car_id,car_type,car_number
+       from car_t
+		WHERE
+		car_number=#{carNumber}
+	</select>
+
     <insert id="insertCar" useGeneratedKeys="true" keyProperty="carId"
             keyColumn="car_id" parameterType="com.superfly.cms.entity.Car">
 		INSERT INTO
