@@ -252,6 +252,25 @@ public class AdminController {
         return modelMap;
     }
 
+//    /**
+//     * 获取所有的维修信息(已完工)保养提醒（分页）
+//     * @return
+//     */
+//    @RequestMapping(value = "/getfixlistmaintain_p", method = RequestMethod.GET)
+//    private Map<String, Object> getfixlistmaintain_p(Integer pageNum,Integer pageSize) {
+//        Map<String, Object> modelMap = new HashMap<String, Object>();
+//        Map map = getfixlistmaintain();
+//        List<Fix> list = (List<Fix>) map.get("Fix");
+//
+//        //总数据条数
+//        modelMap.put("total", list.size());
+//        //当前页
+//        modelMap.put("nowPage", pageNum);
+//        modelMap.put("Fix", list);
+//        return modelMap;
+//    }
+
+
 
 
 
