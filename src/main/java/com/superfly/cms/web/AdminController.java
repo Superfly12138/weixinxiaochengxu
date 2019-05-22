@@ -417,6 +417,33 @@ public class AdminController {
         return modelMap;
     }
 
+    /**
+     * 查询所有的材料信息(分页)
+     *
+     * @return List<Material>
+     */
+    @RequestMapping(value = "/getmateriallist_p", method = RequestMethod.GET)
+    private Map<String, Object> getMaterialList_p(Integer pageNum,Integer pageSize) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        try {
+            //加入这句，可以直接把list的数据根据分页规则重新封装
+            Page page = PageHelper.startPage(pageNum,pageSize,true);
+
+            List<Material> materialList = adminService.queryMaterialList();
+            //总数据条数
+            modelMap.put("total", page.getTotal());
+            //当前页
+            modelMap.put("nowPage", pageNum);
+            //数据
+            modelMap.put("Material", materialList);
+            return modelMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+
+
 
     /**
      * 查询所有的材料信息（按名称筛选）
